@@ -27,27 +27,60 @@
 
 <main>
 
-<!-- Герой: страница показывает то, что раздаёт, — окно. -->
+<!-- Герой: настоящее окно Pier с настоящими приложениями. Доказательство
+     сильнее рисунка, поэтому здесь снимок, а не нарисованная рамка. -->
 <section class="hero">
-  <div class="window" id="hero-window">
-    <div class="titlebar">
-      <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span class="title">pier.bythe.net</span>
+  <div class="hero-text">
+    <h1>Вкладка уходит.<br>Остаётся приложение.</h1>
+    <p class="lede">
+      Pier собирает настольное приложение из любого сайта с web app manifest.
+      Своё окно, своё меню, своя иконка в Dock — и доступ к тому, чего
+      в браузере нет: файлам, портам, устройствам.
+    </p>
+    <div class="actions">
+      <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>
+        Скачать Pier
+      </a>
+      <a class="button ghost" href="#develop">Подключить сайт</a>
     </div>
-    <div class="window-body">
-      <h1>Сайт с окном, меню<br>и иконкой в Dock.</h1>
-      <p class="lede">
-        Pier берёт любой сайт с web app manifest и собирает из него настольное
-        приложение. Ставится один раз — дальше сайты становятся приложениями
-        в одно нажатие.
-      </p>
-      <div class="actions">
-        <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>
-          Скачать Pier
-        </a>
-        <button class="button" id="install-self" hidden>Открыть этот сайт в приложении</button>
+    <p class="fineprint" id="fineprint">Версия 0.5.0 · macOS 14 и новее · 3,2 МБ · подписан и нотаризован</p>
+  </div>
+
+  <figure class="shot">
+    <figcaption>Два сайта, ставшие приложениями. Их находят Launchpad и Spotlight.</figcaption>
+    <img src="pier-home.png" alt="Окно Pier со списком установленных приложений: Фонотека и Mail" width="1400" height="430">
+  </figure>
+</section>
+
+<!-- Механизм объясняем рисунком: браузерная обвязка уходит, остаётся окно. -->
+<section class="transform">
+  <div class="transform-text">
+    <h2>Что происходит с сайтом</h2>
+    <p>Адресная строка, вкладки и чужие кнопки исчезают. Страница остаётся той же
+       и работает на том же коде — но теперь у неё окно, имя и место в системе.</p>
+  </div>
+  <div class="stage" aria-hidden="true">
+    <div class="frame">
+      <div class="chrome-browser">
+        <div class="tabs">
+          <span class="tab active">Фонотека</span><span class="tab"></span><span class="tab"></span>
+        </div>
+        <div class="urlbar"><span class="lock"></span>phono.bythe.net</div>
       </div>
-      <p class="fineprint" id="fineprint">Версия 0.5.0 · macOS 14 и новее · 3,2 МБ · подписан и нотаризован</p>
+      <div class="chrome-app">
+        <span class="lights"><i></i><i></i><i></i></span>
+        <span class="app-name">Фонотека</span>
+      </div>
+      <div class="page">
+        <div class="page-side">
+          <span class="bar w70"></span><span class="bar w50"></span>
+          <span class="bar w60"></span><span class="bar w40"></span>
+        </div>
+        <div class="page-main">
+          <div class="art"></div>
+          <span class="bar w80"></span><span class="bar w60"></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>

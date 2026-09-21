@@ -1,9 +1,9 @@
 {
   "name": "Pier",
   "short_name": "Pier",
-  "id": "/",
-  "start_url": "/",
-  "scope": "/",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0C1A22",
   "theme_color": "#0C1A22",
