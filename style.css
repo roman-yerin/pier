@@ -181,6 +181,7 @@ main { padding: 0 var(--side); }
 .row-result { min-width: 0; margin: 0; }
 .row-result img { display: block; width: 100%; height: auto; border-radius: 6px; }
 .row-result figcaption, .note { color: var(--slate); font-size: .88rem; margin-top: .9rem; max-width: 32rem; }
+.note a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
 .opens { color: var(--slate); font-size: .88rem; margin: 0 0 .6rem; }
 pre.url { margin-top: 0; }
 
