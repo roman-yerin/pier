@@ -43,18 +43,48 @@
   margin: 2rem 0 .6rem;
   color: var(--blue);
 }
+/* Метод — запись: имя, одна фраза и поля «термин — значение». */
+.doc-body h4 {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: .95rem;
+  font-weight: 500;
+  margin: 2.2rem 0 .4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--rule);
+}
+.doc-body h4 code { color: var(--ink); }
+.doc-body h4 + p { margin-top: 0; }
+.doc-body dl {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: .2rem 1rem;
+  margin: .7rem 0 0;
+  font-size: .92rem;
+}
+.doc-body dt { color: var(--slate); font-size: .84rem; padding-top: .1rem; }
+.doc-body dd {
+  margin: 0;
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: .82rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.doc-body dd code { font-size: 1em; }
+.doc-body dd a { color: var(--blue); }
+
 .doc-body p { color: var(--slate); max-width: 46rem; }
 .doc-body ul { color: var(--slate); padding-left: 1.1rem; margin: .8rem 0 0; }
 .doc-body li { margin-bottom: .2rem; }
 
-/* Таблицы справочника широкие: даём им прокручиваться, а не ломать колонку. */
+/* Таблицы справочника широкие: прокручивается обёртка, а не сама таблица —
+   min-width на элементе с overflow-x распирал бы его наружу. */
+.table-scroll { overflow-x: auto; margin: 1.1rem 0 0; }
 .doc-body table {
   width: 100%;
+  min-width: 26rem;   /* таблиц осталось мало, и все они узкие */
   border-collapse: collapse;
-  margin: 1.1rem 0 0;
   font-size: .86rem;
-  display: block;
-  overflow-x: auto;
 }
 .doc-body th, .doc-body td {
   text-align: left;
@@ -72,7 +102,18 @@
 .doc-body td { color: var(--slate); }
 .doc-body td:first-child, .doc-body th:first-child { padding-right: 1.2rem; }
 .doc-body td:first-child code { color: var(--ink); }
-.doc-body code { font-size: .86em; overflow-wrap: anywhere; }
+/* Имена вызовов не режем: рвать `epwa.getInfo` посреди слова — хуже,
+   чем прокрутить таблицу. Переносить разрешаем только длинные куски кода
+   внутри текста, где иначе распирает страницу. */
+.doc-body code { font-size: .86em; white-space: nowrap; }
+.doc-body p code, .doc-body li code { white-space: normal; overflow-wrap: anywhere; }
+.doc-body td code { white-space: normal; }
+.doc-body td:first-child code { white-space: nowrap; }
+
+@media (max-width: 48rem) {
+  .doc-body dl { grid-template-columns: minmax(0, 1fr); gap: 0 0; }
+  .doc-body dt { margin-top: .5rem; }
+}
 
 @media (max-width: 62rem) {
   /* minmax(0, …), иначе горизонтальный список разделов растянет всю страницу. */
