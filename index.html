@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pier — сайт становится приложением</title>
+<meta name="description" content="Pier превращает сайт с web app manifest в настольное приложение: своё окно, меню, иконка в Dock и нативные возможности через window.epwa.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0C1A22">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <span class="wordmark">Pier</span>
+  <nav>
+    <a href="#capabilities">Возможности</a>
+    <a href="#develop">Сайту</a>
+    <a href="#trust">Безопасность</a>
+    <a href="https://github.com/roman-yerin/pier">GitHub</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- Герой: страница показывает то, что раздаёт, — окно. -->
+<section class="hero">
+  <div class="window" id="hero-window">
+    <div class="titlebar">
+      <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="title">pier.bythe.net</span>
+    </div>
+    <div class="window-body">
+      <h1>Сайт с окном, меню<br>и иконкой в Dock.</h1>
+      <p class="lede">
+        Pier берёт любой сайт с web app manifest и собирает из него настольное
+        приложение. Ставится один раз — дальше сайты становятся приложениями
+        в одно нажатие.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>
+          Скачать Pier
+        </a>
+        <button class="button" id="install-self" hidden>Открыть этот сайт в приложении</button>
+      </div>
+      <p class="fineprint" id="fineprint">Версия 0.5.0 · macOS 14 и новее · 3,2 МБ · подписан и нотаризован</p>
+    </div>
+  </div>
+</section>
+
+<!-- Что сайт получает: не карточки с иконками, а живые фрагменты интерфейса. -->
+<section id="capabilities">
+  <h2>Что сайт получает вместе с окном</h2>
+
+  <div class="rows">
+    <article class="row">
+      <div class="row-text">
+        <h3>Своё окно</h3>
+        <p>Кнопки окна, полноэкранный режим, размеры и положение между запусками.
+           Титлбар отдаётся странице: заголовок рисуете вы.</p>
+      </div>
+      <div class="row-demo">
+        <div class="mini-window">
+          <span class="lights sm"><i></i><i></i><i></i></span>
+          <span class="mini-title">Фонотека</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="row-text">
+        <h3>Меню и сочетания клавиш</h3>
+        <p>Своё меню в строке меню и в Dock, печать по ⌘P, поиск по странице,
+           глобальные сочетания — даже когда окно свёрнуто.</p>
+      </div>
+      <div class="row-demo">
+        <div class="menubar">
+          <span class="menu-item bold">Фонотека</span>
+          <span class="menu-item">Файл</span>
+          <span class="menu-item">Правка</span>
+          <span class="menu-item on">Плеер</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="row-text">
+        <h3>Файлы и устройства</h3>
+        <p>Файлы, которые выбрал пользователь, — с правом записи. Порты, USB,
+           HID, Bluetooth и MIDI: то, чего в браузере нет.</p>
+      </div>
+      <div class="row-demo">
+        <ul class="device-list">
+          <li><span class="dot ok"></span>Arduino Uno<span class="muted">/dev/cu.usbmodem</span></li>
+          <li><span class="dot ok"></span>Launchkey Mini<span class="muted">MIDI</span></li>
+          <li><span class="dot"></span>Сканер штрихкодов<span class="muted">HID</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="row-text">
+        <h3>Работа в фоне</h3>
+        <p>Окно закрыто — приложение живёт: играет звук, держит соединения,
+           показывает уведомления с кнопками и полем ответа.</p>
+      </div>
+      <div class="row-demo">
+        <div class="toast">
+          <div class="toast-title">Фонотека</div>
+          <div class="toast-body">Альбом загружен — 14 треков</div>
+          <div class="toast-actions"><span>Открыть</span><span>Позже</span></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Настоящая последовательность — поэтому нумерация уместна. -->
+<section id="how">
+  <h2>Как это работает</h2>
+  <ol class="steps">
+    <li>
+      <h3>Пользователь ставит Pier</h3>
+      <p>Один раз, без прав администратора. Дальше Pier знает, что делать
+         со ссылками вида <code>epwa://launch</code>.</p>
+    </li>
+    <li>
+      <h3>Сайт показывает кнопку</h3>
+      <p>Кнопка открывает ссылку с адресом манифеста. Pier показывает, что
+         за сайт и чего он просит, и собирает приложение.</p>
+    </li>
+    <li>
+      <h3>Приложение открывается на том же месте</h3>
+      <p>Состояние страницы передаётся при запуске: пользователь продолжает
+         там, где был во вкладке.</p>
+    </li>
+  </ol>
+</section>
+
+<section id="develop">
+  <h2>Что нужно от сайта</h2>
+  <p class="section-lede">
+    Ничего, кроме манифеста и кнопки. Сайт остаётся сайтом и работает в любом
+    браузере — <code>window.epwa</code> появляется только внутри приложения.
+  </p>
+
+  <div class="code-pair">
+    <figure>
+      <figcaption>manifest.webmanifest</figcaption>
+<pre><code>{
+  "name": "Фонотека",
+  "id": "/app",
+  "start_url": "/app",
+  "display": "standalone",
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512" }],
+  "epwa": { "permissions": ["files", "midi"] }
+}</code></pre>
+    </figure>
+    <figure>
+      <figcaption>кнопка на странице</figcaption>
+<pre><code>import { canInstallApp, launchApp } from './pier-launch.js';
+
+button.hidden = !canInstallApp();
+button.onclick = () => launchApp({
+  manifest: '/manifest.webmanifest',
+  handoff: { track: player.currentTrack },
+  onLaunched: () => player.pause(),
+});</code></pre>
+    </figure>
+  </div>
+
+  <p class="aside">
+    Проверить манифест до публикации: <code>web-runtime check &lt;адрес&gt;</code>.
+    Типы для <code>window.epwa</code> и полный справочник методов — в репозитории.
+  </p>
+</section>
+
+<section id="trust">
+  <h2>Что приложение не может</h2>
+  <p class="section-lede">
+    Сайт в окне получает больше прав, чем во вкладке, поэтому границы описаны
+    явно — и проверяются тестами при каждой сборке.
+  </p>
+  <ul class="limits">
+    <li><b>Только свой сайт.</b> Мост доступен главному фрейму своего origin. Рекламный iframe, всплывающее окно входа и чужая страница получают отказ.</li>
+    <li><b>Только заявленное.</b> Возможности перечислены в манифесте и показаны в диалоге установки. Незаявленное недоступно, даже если код его зовёт.</li>
+    <li><b>Только выбранное пользователем.</b> Файлы, порты и устройства приходят через системный выбор. Клавиатуры, мыши и ключи безопасности не выдаются никогда.</li>
+    <li><b>Уход с сайта — в браузер.</b> Ссылка за пределы области приложения открывается снаружи, а соединения и устройства прежней страницы закрываются.</li>
+  </ul>
+</section>
+
+<section class="closing">
+  <h2>Поставить и попробовать</h2>
+  <p>
+    Pier подписан Developer ID и нотаризован — открывается без предупреждений.
+    Приложения складываются в <code>~/Applications/Pier</code>, их находят
+    Launchpad и Spotlight.
+  </p>
+  <div class="actions">
+    <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Скачать Pier</a>
+    <a class="button" href="https://github.com/roman-yerin/pier/releases">Все выпуски</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <span>Pier 0.5.0 · ePWA API 3.0</span>
+  <span>Windows и Linux — в плане</span>
+</footer>
+
+<script type="module" src="site.js"></script>
+</body>
+</html>
