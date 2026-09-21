@@ -18,6 +18,7 @@
 <header class="masthead">
   <span class="wordmark">Pier</span>
   <nav>
+    <a href="#difference">Vs. a PWA</a>
     <a href="#nothing">No app to build</a>
     <a href="#users">For your users</a>
     <a href="#code">For your code</a>
@@ -47,8 +48,68 @@
       <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Download Pier</a>
       <a class="button" href="#ship">See what you write</a>
     </div>
-    <p class="fineprint" id="fineprint">0.5.0, macOS 14 and later, 3.2 MB, signed and notarized</p>
+    <p class="fineprint" id="fineprint">0.5.0, macOS 14 and later, 3.2 MB</p>
   </div>
+</section>
+
+<!-- Первое возражение читателя: «мой сайт и так ставится из браузера».
+     Ответ обязан стоять сразу за героем и быть честным: не «лучше», а другое —
+     и там, где у браузеров есть свой ответ (WebSerial, File System Access),
+     это названо вслух. -->
+<section id="difference" class="spine">
+  <h2>You can already install a PWA</h2>
+  <p class="section-lede">
+    Chrome and Safari put your site in a window without tabs, and for many sites
+    that is enough. It is still the browser: the page lives as long as the window,
+    reaches what the web platform allows, and borrows someone else’s menus.
+  </p>
+
+  <table class="versus">
+    <thead>
+      <tr><th scope="col">Installed from the browser</th><th scope="col">Opened by Pier</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A window without tabs. The menu bar, the Dock menu and the shortcuts
+            belong to the browser.</td>
+        <td>A titlebar you draw yourself, your own menu bar and Dock menu, and
+            shortcuts that fire while the window is hidden.</td>
+      </tr>
+      <tr>
+        <td>Closing the window ends the page. Background work is a service worker
+            the browser may stop at any moment.</td>
+        <td>The app keeps running with no window: audio plays on, sockets stay
+            open, notifications still arrive.</td>
+      </tr>
+      <tr>
+        <td>Files through the File System Access sandbox in Chrome; in Safari, a
+            download and an upload.</td>
+        <td>System open and save panels, then read, write, watch and trash what
+            the person picked — across launches.</td>
+      </tr>
+      <tr>
+        <td>Fetch under CORS and WebSocket. No raw sockets, no listening for a
+            connection, no Bonjour.</td>
+        <td>Fetch without CORS, TCP, TLS and UDP sockets, Bonjour, and incoming
+            connections on loopback.</td>
+      </tr>
+      <tr>
+        <td>Serial, USB and HID in Chromium only; nothing of the sort in Safari
+            or Firefox.</td>
+        <td>Serial, USB, HID, Bluetooth and MIDI through the system chooser,
+            the same API wherever Pier runs.</td>
+      </tr>
+      <tr>
+        <td>Secrets live in <code>localStorage</code>, where any script on the
+            origin can read them.</td>
+        <td>Secrets live in the Keychain, behind Touch ID when you ask for it.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="note">The trade is the install: a PWA installs from the browser the
+    person already has, a Pier app needs Pier first. Everything above is why that
+    download is worth asking for — and if none of it is, install the PWA.</p>
 </section>
 
 <!-- Первое, что нужно знать человеку с сайтом: работы по упаковке нет вовсе.
@@ -178,7 +239,7 @@
   <div class="code-pair">
     <figure>
       <figcaption>manifest.webmanifest</figcaption>
-<pre><code>{
+<pre><code class="lang-json">{
   "name": "Phonotheque",
   "id": "/app",
   "start_url": "/app",
@@ -190,28 +251,32 @@
     </figure>
     <figure>
       <figcaption>one button on your page</figcaption>
-<pre><code>import { canInstallApp, launchApp } from './pier-launch.js';
+<pre><code class="lang-js">import { canInstallApp, launchApp } from './pier-launch.js';
 
 button.hidden = !canInstallApp();
 button.onclick = () =&gt; launchApp({
   manifest: '/manifest.webmanifest',
   handoff: { track: player.currentTrack },
   onLaunched: () =&gt; player.pause(),
+  onMissing: () =&gt; downloadPrompt.show(),
 });</code></pre>
     </figure>
   </div>
 
   <p class="aside">The helper is one file, no build step; it hides the button
-    where Pier cannot run and hands the app whatever state the visitor had in the
-    tab. Lint a manifest before you publish it:
+    where Pier cannot run at all, hands the app whatever state the visitor had in
+    the tab, and tells you when a click went nowhere so you can offer the
+    download. Lint a manifest before you publish it:
     <code>web-runtime check &lt;url&gt;</code>.</p>
 </section>
 
 <section id="limits">
   <h2>The honest part</h2>
   <ul class="limits">
-    <li>The person installs Pier once, by hand. Until they do, your button does
-        nothing — so show it only where it works.</li>
+    <li>The person installs Pier once, by hand. No page can tell in advance
+        whether they did: the click opens the <code>epwa://</code> link, and when
+        nothing happens within a moment, <code>onMissing</code> fires and you
+        offer the download.</li>
     <li>macOS 14 and later today. Windows is next, Linux after it; both are a
         plan, not a promise.</li>
     <li>The bridge answers the main frame of your own origin. An ad iframe, a

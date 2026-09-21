@@ -213,6 +213,29 @@ pre.url { margin-top: 0; }
 .api tbody th code { color: var(--blue); font-size: .84rem; }
 .api td:last-child { color: var(--ink); }
 
+/* ---------- Сравнение с установленным PWA ---------- */
+
+/* Та же конструкция, что у остальной страницы: слева то, что есть сейчас,
+   справа то, что даёт Pier; колонки равные, потому что это спор равных,
+   а не список свойств с подписями. */
+.versus { width: 100%; border-collapse: collapse; font-size: .94rem; }
+.versus th, .versus td {
+  text-align: left;
+  vertical-align: top;
+  padding: .9rem 1.5rem .9rem 0;
+  width: 50%;
+}
+.versus thead th {
+  font-size: .8rem;
+  font-variation-settings: 'wght' 600;
+  color: var(--slate);
+  padding-bottom: .4rem;
+}
+.versus tbody tr { border-top: 1px solid var(--rule); }
+.versus td:first-child { color: var(--slate); }
+.versus td:last-child { color: var(--ink); }
+.versus code { color: var(--blue); }
+
 /* ---------- The one animation: browser chrome collapses into a window ---------- */
 
 /* Рамка меняет высоту, поэтому живёт в сцене постоянной высоты — иначе цикл
@@ -319,4 +342,31 @@ footer {
   .row { grid-template-columns: minmax(0, 1fr); }
   .api tbody th { width: auto; display: block; padding-bottom: .2rem; }
   .api tbody td { display: block; }
+  /* Узкий экран: сравнение читается парами, одна под другой. Заголовки колонок
+     уходят, поэтому каждая половина пары называет себя сама — иначе непонятно,
+     где чьё. */
+  .versus thead { display: none; }
+  .versus td { display: block; width: auto; padding: .2rem 0; }
+  .versus td:first-child { padding-top: .9rem; }
+  .versus td:last-child { padding-bottom: .9rem; }
+  .versus td::before {
+    display: block;
+    color: var(--slate);
+    font-size: .78rem;
+    margin-bottom: .1rem;
+  }
+  .versus td:first-child::before { content: 'From the browser'; }
+  .versus td:last-child::before { content: 'From Pier'; }
 }
+
+/* Подсветка: ультрамарин уже занят ключами манифеста в тексте страницы, поэтому
+   он же — ключи и служебные слова в коде; строки берут приглушённый зелёный,
+   и на этом палитра кончается. */
+:root { --code-key: var(--blue); --code-str: #1F7A5C; --code-lit: #8A5A00; }
+@media (prefers-color-scheme: dark) {
+  :root { --code-str: #6FBF9B; --code-lit: #C8A45C; }
+}
+.t-key, .t-kw { color: var(--code-key); }
+.t-str { color: var(--code-str); }
+.t-num, .t-lit { color: var(--code-lit); }
+.t-com { color: var(--slate); }
