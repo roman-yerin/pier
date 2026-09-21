@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pier — сайт становится приложением</title>
-<meta name="description" content="Pier превращает сайт с web app manifest в настольное приложение: своё окно, меню, иконка в Dock и нативные возможности через window.epwa.">
+<title>Pier — сайт становится настольным приложением</title>
+<meta name="description" content="Pier собирает настольное приложение из сайта с web app manifest: своё окно, меню, иконка в Dock и нативные возможности через window.epwa.">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#0C1A22">
+<meta name="theme-color" content="#0B1B24">
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,53 +18,52 @@
 <header class="masthead">
   <span class="wordmark">Pier</span>
   <nav>
-    <a href="#capabilities">Возможности</a>
-    <a href="#develop">Сайту</a>
-    <a href="#trust">Безопасность</a>
+    <a href="#connect">Подключить сайт</a>
+    <a href="#api">Возможности</a>
+    <a href="#limits">Границы</a>
     <a href="https://github.com/roman-yerin/pier">GitHub</a>
   </nav>
 </header>
 
 <main>
 
-<!-- Герой: настоящее окно Pier с настоящими приложениями. Доказательство
-     сильнее рисунка, поэтому здесь снимок, а не нарисованная рамка. -->
+<!-- Доказательство важнее рисунка: настоящее окно Pier с настоящими приложениями. -->
 <section class="hero">
   <div class="hero-text">
     <h1>Сайт становится настольным приложением</h1>
     <p class="lede">
-      Pier собирает его из любого сайта с web app manifest: своё окно, своё меню,
-      своя иконка в Dock — и доступ к тому, чего в браузере нет: файлам, портам,
-      устройствам.
+      Своё окно, своё меню, своя иконка в Dock — и файлы, порты и устройства,
+      которых в браузере нет.
     </p>
     <div class="actions">
-      <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>
-        Скачать Pier
-      </a>
-      <a class="button ghost" href="#develop">Подключить сайт</a>
+      <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Скачать Pier</a>
+      <a class="button ghost" href="#connect">Подключить свой сайт</a>
     </div>
-    <p class="fineprint" id="fineprint">Версия 0.5.0 · macOS 14 и новее · 3,2 МБ · подписан и нотаризован</p>
+    <p class="fineprint" id="fineprint">0.5.0, macOS 14 и новее, 3,2 МБ, подписан и нотаризован</p>
   </div>
 
   <figure class="shot">
-    <figcaption>Два сайта, ставшие приложениями. Их находят Launchpad и Spotlight.</figcaption>
+    <figcaption>Два сайта, ставшие приложениями: их находят Launchpad и Spotlight.</figcaption>
     <img src="pier-home.png" alt="Окно Pier со списком установленных приложений: Фонотека и Mail" width="1400" height="430">
   </figure>
 </section>
 
-<!-- Механизм объясняем рисунком: браузерная обвязка уходит, остаётся окно. -->
-<section class="transform">
-  <div class="transform-text">
-    <h2>Что происходит с сайтом</h2>
-    <p>Адресная строка, вкладки и чужие кнопки исчезают. Страница остаётся той же
-       и работает на том же коде — но теперь у неё окно, имя и место в системе.</p>
+<section id="how" class="how">
+  <div class="how-text">
+    <h2>Как это работает</h2>
+    <ol class="steps">
+      <li>Пользователь ставит Pier — один раз, без прав администратора.</li>
+      <li>На сайте нажимает кнопку: Pier читает манифест, показывает, что за
+          сайт и чего он просит, и собирает приложение.</li>
+      <li>Приложение открывается там же, где человек был во вкладке.</li>
+    </ol>
   </div>
+
+  <!-- Единственное движение на странице: браузерная обвязка уходит, остаётся окно. -->
   <div class="stage" aria-hidden="true">
     <div class="frame">
       <div class="chrome-browser">
-        <div class="tabs">
-          <span class="tab active">Фонотека</span><span class="tab"></span><span class="tab"></span>
-        </div>
+        <div class="tabs"><span class="tab active">Фонотека</span><span class="tab"></span><span class="tab"></span></div>
         <div class="urlbar"><span class="lock"></span><span class="bar w50"></span></div>
       </div>
       <div class="chrome-app">
@@ -72,187 +71,18 @@
         <span class="app-name">Фонотека</span>
       </div>
       <div class="page">
-        <div class="page-side">
-          <span class="bar w70"></span><span class="bar w50"></span>
-          <span class="bar w60"></span><span class="bar w40"></span>
-        </div>
-        <div class="page-main">
-          <div class="art"></div>
-          <span class="bar w80"></span><span class="bar w60"></span>
-        </div>
+        <div class="page-side"><span class="bar w70"></span><span class="bar w50"></span><span class="bar w60"></span><span class="bar w40"></span></div>
+        <div class="page-main"><div class="art"></div><span class="bar w80"></span><span class="bar w60"></span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Карта моста целиком: группы взяты из spec/epwa.json, а не выбраны на вкус.
-     У каждой группы, которой нужно разрешение, оно названо — умолчания тут хуже
-     длинного списка. -->
-<section id="capabilities">
-  <h2>Что сайт получает, став приложением</h2>
-  <p class="section-lede">
-    144 метода, 50 событий, 13 разрешений. Ниже — все группы моста, а не выборка;
-    где нужно разрешение из манифеста, оно названо.
-  </p>
-
-  <div class="rows">
-    <article class="row">
-      <div class="row-text">
-        <h3>Окно и титлбар</h3>
-        <p>Кнопки окна и их положение, полноэкранный режим, поверх всех окон,
-           размер и место между запусками, именованные рамки («мини-плеер»),
-           нативные материалы под прозрачной страницей, drag-области,
-           перехват закрытия, жесты навигации, печать, «Найти», «Настройки»,
-           «О программе», отклик тачпада.</p>
-      </div>
-      <div class="row-demo">
-        <div class="mini-window">
-          <span class="lights sm"><i></i><i></i><i></i></span>
-          <span class="mini-title">Фонотека</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="row">
-      <div class="row-text">
-        <h3>Меню, Dock и строка меню</h3>
-        <p>Своё главное меню и меню в Dock из JSON, контекстные меню, значок
-           в строке меню, живая иконка в Dock с прогрессом и бейджем, «привлечь
-           внимание», меню «Поделиться», глобальные сочетания клавиш — они
-           работают и когда окно свёрнуто.</p>
-      </div>
-      <div class="row-demo">
-        <div class="menubar">
-          <span class="menu-item bold">Фонотека</span>
-          <span class="menu-item">Файл</span>
-          <span class="menu-item">Правка</span>
-          <span class="menu-item on">Плеер</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="row">
-      <div class="row-text">
-        <h3>Файлы <code>files</code></h3>
-        <p>Системные «Открыть» и «Сохранить», чтение и запись, слежение за
-           изменениями, перенос в Корзину, показ в Finder, своя папка приложения.
-           Выбранное пользователем не теряется между запусками, а путей страница
-           не видит — только хэндлы. Файлы, которыми открыли приложение,
-           приходят без разрешения вовсе.</p>
-      </div>
-      <div class="row-demo">
-        <ul class="device-list">
-          <li><span class="dot ok"></span>Альбомы<span class="muted">папка, запись</span></li>
-          <li><span class="dot ok"></span>cover.jpg<span class="muted">слежение</span></li>
-          <li><span class="dot"></span>Библиотека<span class="muted">своя папка</span></li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="row">
-      <div class="row-text">
-        <h3>Сеть <code>network</code></h3>
-        <p>HTTP без CORS, сокеты TCP, TLS и UDP, обзор Bonjour, приём входящих
-           соединений, состояние сети и события её смены. Приём по умолчанию
-           только на петле; выход в локальную сеть спрашивается отдельно.</p>
-      </div>
-      <div class="row-demo">
-        <ul class="device-list">
-          <li><span class="dot ok"></span>TCP 192.168.1.40:4242<span class="muted">сокет</span></li>
-          <li><span class="dot ok"></span>_music._tcp<span class="muted">Bonjour</span></li>
-          <li><span class="dot"></span>0.0.0.0:8080<span class="muted">приём</span></li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="row">
-      <div class="row-text">
-        <h3>Устройства <code>serial</code> <code>usb</code> <code>hid</code> <code>bluetooth</code> <code>midi</code></h3>
-        <p>Последовательные порты, USB без драйвера, HID, Bluetooth LE и MIDI —
-           по одному разрешению на вид. Устройство всегда выбирает пользователь
-           в системном окне; клавиатуры, мыши и ключи безопасности не выдаются
-           никогда.</p>
-      </div>
-      <div class="row-demo">
-        <ul class="device-list">
-          <li><span class="dot ok"></span>Arduino Uno<span class="muted">/dev/cu.usbmodem</span></li>
-          <li><span class="dot ok"></span>Launchkey Mini<span class="muted">MIDI</span></li>
-          <li><span class="dot"></span>Сканер штрихкодов<span class="muted">HID</span></li>
-        </ul>
-      </div>
-    </article>
-
-    <article class="row">
-      <div class="row-text">
-        <h3>Уведомления <code>notifications</code> и диалоги</h3>
-        <p>Нативные уведомления с кнопками, полем ответа, вложениями и отложенным
-           показом. Системные окна сообщения, подтверждения и ввода строки —
-           без разрешения. Окно закрыто — приложение живёт: играет звук, держит
-           соединения, показывает уведомления.</p>
-      </div>
-      <div class="row-demo">
-        <div class="toast">
-          <div class="toast-title">Фонотека</div>
-          <div class="toast-body">Альбом загружен — 14 треков</div>
-          <div class="toast-actions"><span>Открыть</span><span>Позже</span></div>
-        </div>
-      </div>
-    </article>
-
-    <article class="row">
-      <div class="row-text">
-        <h3>Система</h3>
-        <p>Не давать компьютеру засыпать, батарея и простой пользователя; секреты
-           в Связке ключей; проверка владельца по Touch ID; буфер обмена
-           в нескольких представлениях; автозапуск при входе; сброс своих данных;
-           геопозиция <code>location</code>, камера <code>camera</code>, микрофон
-           <code>microphone</code>, запись экрана <code>screen</code> и чтение
-           буфера <code>clipboard-read</code> — их спрашивает сама система.</p>
-      </div>
-      <div class="row-demo">
-        <ul class="device-list">
-          <li><span class="dot ok"></span>Не засыпать<span class="muted">пока играет</span></li>
-          <li><span class="dot ok"></span>Токен сайта<span class="muted">Связка ключей</span></li>
-          <li><span class="dot"></span>Touch ID<span class="muted">владелец Mac</span></li>
-        </ul>
-      </div>
-    </article>
-  </div>
-
-  <p class="aside">
-    Полный справочник методов и событий — <code>docs/bridge-api.md</code>
-    в репозитории; он и типы для <code>window.epwa</code> собираются из одной
-    машинно-читаемой спецификации, так что разойтись с кодом не могут.
-  </p>
-</section>
-
-<!-- Настоящая последовательность — поэтому нумерация уместна. -->
-<section id="how">
-  <h2>Как это работает</h2>
-  <ol class="steps">
-    <li>
-      <h3>Пользователь ставит Pier</h3>
-      <p>Один раз, без прав администратора. Дальше Pier знает, что делать
-         со ссылками вида <code>epwa://launch</code>.</p>
-    </li>
-    <li>
-      <h3>Сайт показывает кнопку</h3>
-      <p>Кнопка открывает ссылку с адресом манифеста. Pier показывает, что
-         за сайт и чего он просит, и собирает приложение.</p>
-    </li>
-    <li>
-      <h3>Приложение открывается на том же месте</h3>
-      <p>Состояние страницы передаётся при запуске: пользователь продолжает
-         там, где был во вкладке.</p>
-    </li>
-  </ol>
-</section>
-
-<section id="develop">
+<section id="connect">
   <h2>Что нужно от сайта</h2>
   <p class="section-lede">
-    Ничего, кроме манифеста и кнопки. Сайт остаётся сайтом и работает в любом
-    браузере — <code>window.epwa</code> появляется только внутри приложения.
+    Манифест и кнопка. Сайт остаётся сайтом и работает в любом браузере:
+    <code>window.epwa</code> появляется только внутри приложения.
   </p>
 
   <div class="code-pair">
@@ -272,41 +102,85 @@
 <pre><code>import { canInstallApp, launchApp } from './pier-launch.js';
 
 button.hidden = !canInstallApp();
-button.onclick = () => launchApp({
+button.onclick = () =&gt; launchApp({
   manifest: '/manifest.webmanifest',
   handoff: { track: player.currentTrack },
-  onLaunched: () => player.pause(),
+  onLaunched: () =&gt; player.pause(),
 });</code></pre>
     </figure>
   </div>
 
-  <p class="aside">
-    Проверить манифест до публикации: <code>web-runtime check &lt;адрес&gt;</code>.
-    Типы для <code>window.epwa</code> и полный справочник методов — в репозитории.
-  </p>
+  <p class="aside">Проверить манифест до публикации: <code>web-runtime check &lt;адрес&gt;</code>.</p>
 </section>
 
-<section id="trust">
-  <h2>Что приложение не может</h2>
+<section id="api">
+  <h2>Что появляется у сайта</h2>
   <p class="section-lede">
-    Сайт в окне получает больше прав, чем во вкладке, поэтому границы описаны
-    явно — и проверяются тестами при каждой сборке.
+    144 метода и 50 событий. У каждой группы своё разрешение из манифеста;
+    незаявленное отвечает отказом, даже если код его зовёт.
   </p>
+
+  <dl class="api">
+    <div>
+      <dt>Окно и титлбар</dt>
+      <dd>Полный экран, поверх всех окон, размер и место между запусками,
+          именованные рамки вроде мини-плеера, нативные материалы, свои
+          drag-области, перехват закрытия.</dd>
+    </div>
+    <div>
+      <dt>Меню, Dock и строка меню</dt>
+      <dd>Главное меню и меню в Dock из JSON, контекстные меню, значок в строке
+          меню, иконка с прогрессом и бейджем, глобальные сочетания клавиш.</dd>
+    </div>
+    <div>
+      <dt>Файлы <code>files</code></dt>
+      <dd>Открыть и сохранить, читать и писать, следить за изменениями, убрать
+          в Корзину. Выбор пользователя живёт между запусками; путей страница
+          не видит.</dd>
+    </div>
+    <div>
+      <dt>Сеть <code>network</code></dt>
+      <dd>HTTP без CORS, сокеты TCP, TLS и UDP, обзор Bonjour, приём входящих
+          соединений — по умолчанию только на петле.</dd>
+    </div>
+    <div>
+      <dt>Устройства <code>serial</code> <code>usb</code> <code>hid</code> <code>bluetooth</code> <code>midi</code></dt>
+      <dd>Порты, USB без драйвера, HID, Bluetooth LE и MIDI. Устройство выбирает
+          пользователь; клавиатуры, мыши и ключи безопасности — никогда.</dd>
+    </div>
+    <div>
+      <dt>Фон и уведомления <code>notifications</code></dt>
+      <dd>Окно закрыто — приложение живёт: играет звук, держит соединения,
+          показывает уведомления с кнопками и полем ответа.</dd>
+    </div>
+    <div>
+      <dt>Система</dt>
+      <dd>Не давать компьютеру засыпать, секреты в Связке ключей, Touch ID,
+          буфер обмена, автозапуск при входе.</dd>
+    </div>
+    <div>
+      <dt>С разрешения системы <code>camera</code> <code>microphone</code> <code>location</code> <code>screen</code></dt>
+      <dd>Камера, микрофон, геопозиция и запись экрана: спрашивает macOS, Pier
+          только передаёт запрос.</dd>
+    </div>
+  </dl>
+</section>
+
+<section id="limits">
+  <h2>Чего приложение не может</h2>
   <ul class="limits">
-    <li><b>Только свой сайт.</b> Мост доступен главному фрейму своего origin. Рекламный iframe, всплывающее окно входа и чужая страница получают отказ.</li>
-    <li><b>Только заявленное.</b> Возможности перечислены в манифесте и показаны в диалоге установки. Незаявленное недоступно, даже если код его зовёт.</li>
-    <li><b>Только выбранное пользователем.</b> Файлы, порты и устройства приходят через системный выбор. Клавиатуры, мыши и ключи безопасности не выдаются никогда.</li>
-    <li><b>Уход с сайта — в браузер.</b> Ссылка за пределы области приложения открывается снаружи, а соединения и устройства прежней страницы закрываются.</li>
+    <li>Мост отвечает только главному фрейму своего origin: рекламный iframe,
+        всплывающее окно входа и чужая страница получают отказ.</li>
+    <li>Файлы, порты и устройства приходят только через системный выбор.</li>
+    <li>Ссылка за пределы области приложения открывается в браузере, а устройства
+        и соединения прежней страницы закрываются.</li>
+    <li>Границы проверяются тестами при каждой сборке, а не обещаны на словах.</li>
   </ul>
 </section>
 
 <section class="closing">
   <h2>Поставить и попробовать</h2>
-  <p>
-    Pier подписан Developer ID и нотаризован — открывается без предупреждений.
-    Приложения складываются в <code>~/Applications/Pier</code>, их находят
-    Launchpad и Spotlight.
-  </p>
+  <p>Приложения складываются в <code>~/Applications/Pier</code>. Удалить — перетащить в Корзину.</p>
   <div class="actions">
     <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Скачать Pier</a>
     <a class="button" href="https://github.com/roman-yerin/pier/releases">Все выпуски</a>
@@ -316,7 +190,7 @@ button.onclick = () => launchApp({
 </main>
 
 <footer>
-  <span>Pier 0.5.0 · ePWA API 3.0</span>
+  <span>Pier 0.5.0, ePWA API 3.0</span>
   <span>Windows и Linux — в плане</span>
 </footer>
 
