@@ -168,7 +168,7 @@ section { padding-block: var(--gap); }
 
 /* Браузерная обвязка схлопывается, оконная разворачивается — это и есть
    превращение; всё движение заперто внутри .stage. */
-.chrome-browser { padding: .5rem .6rem; animation: browser-out 4.6s ease-in-out infinite; }
+.chrome-browser { padding: .5rem .6rem; animation: browser-out 7s ease-in-out infinite; }
 .tabs { display: flex; gap: .3rem; }
 .tab {
   height: 1.3rem; width: 4.4rem; border-radius: 5px 5px 0 0;
@@ -194,7 +194,7 @@ section { padding-block: var(--gap); }
 .chrome-app {
   display: flex; align-items: center; gap: .7rem;
   padding: .55rem .7rem;
-  animation: app-in 4.6s ease-in-out infinite;
+  animation: app-in 7s ease-in-out infinite;
 }
 .app-name { font-size: .78rem; font-variation-settings: 'wght' 600; }
 
@@ -207,13 +207,19 @@ section { padding-block: var(--gap); }
   background: linear-gradient(135deg, color-mix(in srgb, var(--cedar) 55%, transparent), color-mix(in srgb, var(--tide) 45%, transparent));
 }
 
+/* Цикл замкнут: вкладка → окно → снова вкладка, с остановкой на каждом
+   состоянии. Иначе на стыке кадров был бы рывок из окна обратно во вкладку. */
+/* Отступы и рамку объявляем в каждом кадре: в замкнутом цикле подразумеваемого
+   конечного кадра нет, и незаявленное свойство так и осталось бы нулевым. */
 @keyframes browser-out {
-  0%, 34% { max-height: 4.5rem; opacity: 1; }
-  46%, 100% { max-height: 0; opacity: 0; padding-block: 0; border-bottom-width: 0; }
+  0%, 26% { max-height: 4.5rem; opacity: 1; padding-block: .5rem; border-bottom-width: 1px; }
+  36%, 72% { max-height: 0; opacity: 0; padding-block: 0; border-bottom-width: 0; }
+  82%, 100% { max-height: 4.5rem; opacity: 1; padding-block: .5rem; border-bottom-width: 1px; }
 }
 @keyframes app-in {
-  0%, 38% { max-height: 0; opacity: 0; padding-block: 0; border-bottom-width: 0; }
-  50%, 100% { max-height: 3rem; opacity: 1; }
+  0%, 30% { max-height: 0; opacity: 0; padding-block: 0; border-bottom-width: 0; }
+  40%, 68% { max-height: 3rem; opacity: 1; padding-block: .55rem; border-bottom-width: 1px; }
+  78%, 100% { max-height: 0; opacity: 0; padding-block: 0; border-bottom-width: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .chrome-browser, .chrome-app { animation: none; }
