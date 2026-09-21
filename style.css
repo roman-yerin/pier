@@ -110,6 +110,9 @@ section { padding-block: clamp(2.5rem, 5vw, 4rem); }
 
 /* Герой — это окно: рамка, титлбар с кнопками, внутри содержимое страницы. */
 .hero {
+  /* Общий отступ секции здесь неуместен: рамка окна должна начинаться
+     титлбаром вплотную, воздух даёт padding внутри .hero-body. */
+  padding-block: 0;
   margin: clamp(.5rem, 2vw, 1.5rem) 0 clamp(3rem, 6vw, 5rem);
   background: var(--raise);
   border: 1px solid var(--rule);
