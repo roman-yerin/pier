@@ -110,14 +110,14 @@ section { padding-block: var(--gap); }
   margin-inline: calc(50% - 50vw);
   padding: clamp(2rem, 5vw, 4rem) max(clamp(1rem, 5vw, 3.5rem), calc(50vw - 39rem)) 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
   align-items: end;
   overflow: hidden;
 }
 
 .hero h1 {
-  font-size: clamp(2.6rem, 6.4vw, 4.6rem);
+  font-size: clamp(2.4rem, 5.4vw, 4rem);
   font-variation-settings: 'wdth' 118, 'wght' 700;
   letter-spacing: -.028em;
 }
@@ -148,25 +148,24 @@ section { padding-block: var(--gap); }
 }
 .transform-text p { color: var(--muted); }
 
-.stage { perspective: 1200px; }
-
 .frame {
-  position: relative;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 10px;
   box-shadow: var(--shadow);
   overflow: hidden;
-  animation: lift 4.6s ease-in-out infinite;
 }
 
-.chrome-browser, .chrome-app {
+/* Обе обвязки занимают одну ячейку: высоту задаёт большая из них, браузерная. */
+.chrome {
+  display: grid;
   border-bottom: 1px solid var(--line);
   background: color-mix(in srgb, var(--tide) 10%, var(--surface));
 }
+.chrome > * { grid-area: 1 / 1; }
 
-/* Браузер схлопывается, окно проявляется — один цикл читается как превращение. */
-.chrome-browser { position: relative; padding: .5rem .6rem; animation: browser-out 4.6s ease-in-out infinite; }
+/* Браузерная обвязка гаснет, оконная проявляется — цикл читается как превращение. */
+.chrome-browser { padding: .5rem .6rem; animation: browser-out 4.6s ease-in-out infinite; }
 .tabs { display: flex; gap: .3rem; }
 .tab {
   height: 1.3rem; width: 4.4rem; border-radius: 5px 5px 0 0;
@@ -190,9 +189,6 @@ section { padding-block: var(--gap); }
 .lock { width: 7px; height: 9px; border-radius: 2px; background: var(--tide); flex: none; }
 
 .chrome-app {
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 100%;
   display: flex; align-items: center; gap: .7rem;
   padding: .55rem .7rem;
   animation: app-in 4.6s ease-in-out infinite;
@@ -217,13 +213,8 @@ section { padding-block: var(--gap); }
   0%, 38% { opacity: 0; }
   50%, 100% { opacity: 1; }
 }
-@keyframes lift {
-  0%, 34% { transform: none; box-shadow: var(--shadow); }
-  52%, 100% { transform: translateY(-6px) rotateX(2deg); box-shadow: 0 20px 44px rgba(12, 26, 34, .22); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .frame, .chrome-browser, .chrome-app { animation: none; }
+  .chrome-browser, .chrome-app { animation: none; }
   .chrome-browser { visibility: hidden; }   /* место сохраняем, высоту рамки — тоже */
 }
 

@@ -31,11 +31,11 @@
      сильнее рисунка, поэтому здесь снимок, а не нарисованная рамка. -->
 <section class="hero">
   <div class="hero-text">
-    <h1>Вкладка уходит.<br>Остаётся приложение.</h1>
+    <h1>Сайт становится настольным приложением</h1>
     <p class="lede">
-      Pier собирает настольное приложение из любого сайта с web app manifest.
-      Своё окно, своё меню, своя иконка в Dock — и доступ к тому, чего
-      в браузере нет: файлам, портам, устройствам.
+      Pier собирает его из любого сайта с web app manifest: своё окно, своё меню,
+      своя иконка в Dock — и доступ к тому, чего в браузере нет: файлам, портам,
+      устройствам.
     </p>
     <div class="actions">
       <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>
@@ -61,15 +61,18 @@
   </div>
   <div class="stage" aria-hidden="true">
     <div class="frame">
-      <div class="chrome-browser">
-        <div class="tabs">
-          <span class="tab active">Фонотека</span><span class="tab"></span><span class="tab"></span>
+      <!-- Обе обвязки — в одной ячейке грида: высота рамки не зависит от фазы. -->
+      <div class="chrome">
+        <div class="chrome-browser">
+          <div class="tabs">
+            <span class="tab active">Фонотека</span><span class="tab"></span><span class="tab"></span>
+          </div>
+          <div class="urlbar"><span class="lock"></span><span class="bar w50"></span></div>
         </div>
-        <div class="urlbar"><span class="lock"></span><span class="bar w50"></span></div>
-      </div>
-      <div class="chrome-app">
-        <span class="lights"><i></i><i></i><i></i></span>
-        <span class="app-name">Фонотека</span>
+        <div class="chrome-app">
+          <span class="lights"><i></i><i></i><i></i></span>
+          <span class="app-name">Фонотека</span>
+        </div>
       </div>
       <div class="page">
         <div class="page-side">
@@ -85,16 +88,25 @@
   </div>
 </section>
 
-<!-- Что сайт получает: не карточки с иконками, а живые фрагменты интерфейса. -->
+<!-- Карта моста целиком: группы взяты из spec/epwa.json, а не выбраны на вкус.
+     У каждой группы, которой нужно разрешение, оно названо — умолчания тут хуже
+     длинного списка. -->
 <section id="capabilities">
   <h2>Что сайт получает, став приложением</h2>
+  <p class="section-lede">
+    144 метода, 50 событий, 13 разрешений. Ниже — все группы моста, а не выборка;
+    где нужно разрешение из манифеста, оно названо.
+  </p>
 
   <div class="rows">
     <article class="row">
       <div class="row-text">
-        <h3>Своё окно</h3>
-        <p>Кнопки окна, полноэкранный режим, размеры и положение между запусками.
-           Титлбар отдаётся странице: заголовок рисуете вы.</p>
+        <h3>Окно и титлбар</h3>
+        <p>Кнопки окна и их положение, полноэкранный режим, поверх всех окон,
+           размер и место между запусками, именованные рамки («мини-плеер»),
+           нативные материалы под прозрачной страницей, drag-области,
+           перехват закрытия, жесты навигации, печать, «Найти», «Настройки»,
+           «О программе», отклик тачпада.</p>
       </div>
       <div class="row-demo">
         <div class="mini-window">
@@ -106,9 +118,11 @@
 
     <article class="row">
       <div class="row-text">
-        <h3>Меню и сочетания клавиш</h3>
-        <p>Своё меню в строке меню и в Dock, печать по ⌘P, поиск по странице,
-           глобальные сочетания — даже когда окно свёрнуто.</p>
+        <h3>Меню, Dock и строка меню</h3>
+        <p>Своё главное меню и меню в Dock из JSON, контекстные меню, значок
+           в строке меню, живая иконка в Dock с прогрессом и бейджем, «привлечь
+           внимание», меню «Поделиться», глобальные сочетания клавиш — они
+           работают и когда окно свёрнуто.</p>
       </div>
       <div class="row-demo">
         <div class="menubar">
@@ -122,9 +136,45 @@
 
     <article class="row">
       <div class="row-text">
-        <h3>Файлы и устройства</h3>
-        <p>Файлы, которые выбрал пользователь, — с правом записи. Порты, USB,
-           HID, Bluetooth и MIDI: то, чего в браузере нет.</p>
+        <h3>Файлы <code>files</code></h3>
+        <p>Системные «Открыть» и «Сохранить», чтение и запись, слежение за
+           изменениями, перенос в Корзину, показ в Finder, своя папка приложения.
+           Выбранное пользователем не теряется между запусками, а путей страница
+           не видит — только хэндлы. Файлы, которыми открыли приложение,
+           приходят без разрешения вовсе.</p>
+      </div>
+      <div class="row-demo">
+        <ul class="device-list">
+          <li><span class="dot ok"></span>Альбомы<span class="muted">папка, запись</span></li>
+          <li><span class="dot ok"></span>cover.jpg<span class="muted">слежение</span></li>
+          <li><span class="dot"></span>Библиотека<span class="muted">своя папка</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="row-text">
+        <h3>Сеть <code>network</code></h3>
+        <p>HTTP без CORS, сокеты TCP, TLS и UDP, обзор Bonjour, приём входящих
+           соединений, состояние сети и события её смены. Приём по умолчанию
+           только на петле; выход в локальную сеть спрашивается отдельно.</p>
+      </div>
+      <div class="row-demo">
+        <ul class="device-list">
+          <li><span class="dot ok"></span>TCP 192.168.1.40:4242<span class="muted">сокет</span></li>
+          <li><span class="dot ok"></span>_music._tcp<span class="muted">Bonjour</span></li>
+          <li><span class="dot"></span>0.0.0.0:8080<span class="muted">приём</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="row">
+      <div class="row-text">
+        <h3>Устройства <code>serial</code> <code>usb</code> <code>hid</code> <code>bluetooth</code> <code>midi</code></h3>
+        <p>Последовательные порты, USB без драйвера, HID, Bluetooth LE и MIDI —
+           по одному разрешению на вид. Устройство всегда выбирает пользователь
+           в системном окне; клавиатуры, мыши и ключи безопасности не выдаются
+           никогда.</p>
       </div>
       <div class="row-demo">
         <ul class="device-list">
@@ -137,9 +187,11 @@
 
     <article class="row">
       <div class="row-text">
-        <h3>Работа в фоне</h3>
-        <p>Окно закрыто — приложение живёт: играет звук, держит соединения,
-           показывает уведомления с кнопками и полем ответа.</p>
+        <h3>Уведомления <code>notifications</code> и диалоги</h3>
+        <p>Нативные уведомления с кнопками, полем ответа, вложениями и отложенным
+           показом. Системные окна сообщения, подтверждения и ввода строки —
+           без разрешения. Окно закрыто — приложение живёт: играет звук, держит
+           соединения, показывает уведомления.</p>
       </div>
       <div class="row-demo">
         <div class="toast">
@@ -149,7 +201,32 @@
         </div>
       </div>
     </article>
+
+    <article class="row">
+      <div class="row-text">
+        <h3>Система</h3>
+        <p>Не давать компьютеру засыпать, батарея и простой пользователя; секреты
+           в Связке ключей; проверка владельца по Touch ID; буфер обмена
+           в нескольких представлениях; автозапуск при входе; сброс своих данных;
+           геопозиция <code>location</code>, камера <code>camera</code>, микрофон
+           <code>microphone</code>, запись экрана <code>screen</code> и чтение
+           буфера <code>clipboard-read</code> — их спрашивает сама система.</p>
+      </div>
+      <div class="row-demo">
+        <ul class="device-list">
+          <li><span class="dot ok"></span>Не засыпать<span class="muted">пока играет</span></li>
+          <li><span class="dot ok"></span>Токен сайта<span class="muted">Связка ключей</span></li>
+          <li><span class="dot"></span>Touch ID<span class="muted">владелец Mac</span></li>
+        </ul>
+      </div>
+    </article>
   </div>
+
+  <p class="aside">
+    Полный справочник методов и событий — <code>docs/bridge-api.md</code>
+    в репозитории; он и типы для <code>window.epwa</code> собираются из одной
+    машинно-читаемой спецификации, так что разойтись с кодом не могут.
+  </p>
 </section>
 
 <!-- Настоящая последовательность — поэтому нумерация уместна. -->
