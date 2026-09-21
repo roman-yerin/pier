@@ -1,0 +1,11 @@
+{
+  "name": "Phonotheque",
+  "short_name": "Phonotheque",
+  "id": "/pier/demo/",
+  "start_url": "/pier/demo/",
+  "scope": "/pier/demo/",
+  "display": "standalone",
+  "description": "Example manifest used for the screenshot on the Pier site.",
+  "icons": [{ "src": "icon.png", "sizes": "512x512", "type": "image/png" }],
+  "epwa": { "permissions": ["files", "midi", "notifications"] }
+}
