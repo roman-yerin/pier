@@ -6,8 +6,9 @@
    анимация стоит в строке "display": "standalone" — том самом ключе, который
    убирает браузерную обвязку.
 
-   Шрифты: Bricolage Grotesque (оси opsz и wdth — заголовки узкие и плотные,
-   текст обычный) и IBM Plex Mono только там, где настоящий код.
+   Шрифты: Instrument Sans (ось wdth — заголовки чуть у́же текста) и
+   IBM Plex Mono только там, где настоящий код. Гротеск здесь трезвый:
+   инструменту разработчика манерность ни к чему.
    Цвет: бумага, чернила и один ультрамарин на действиях и ключах. */
 
 :root {
@@ -39,8 +40,8 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-  font-variation-settings: 'wdth' 100, 'opsz' 14;
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-variation-settings: 'wdth' 100;
   font-size: 17px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -48,12 +49,12 @@ body {
 
 h1, h2 {
   margin: 0;
-  font-variation-settings: 'wdth' 82, 'opsz' 96, 'wght' 700;
-  line-height: .96;
-  letter-spacing: -.02em;
+  font-variation-settings: 'wdth' 92, 'wght' 700;
+  line-height: 1.02;
+  letter-spacing: -.032em;
   text-wrap: balance;
 }
-h1 { font-size: clamp(3rem, 8.5vw, 6.5rem); }
+h1 { font-size: clamp(2.7rem, 7.4vw, 5.6rem); }
 h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
 
 h3 {
@@ -71,7 +72,7 @@ code {
   font-size: .88em;
 }
 h3 code { color: var(--blue); }
-h3.plain { font-family: inherit; font-size: 1.05rem; font-variation-settings: 'wdth' 100, 'wght' 650; }
+h3.plain { font-family: inherit; font-size: 1.05rem; font-variation-settings: 'wdth' 100, 'wght' 600; }
 
 pre {
   margin: 1.2rem 0 0;
@@ -96,7 +97,7 @@ pre code { font-size: 1em; }
   gap: 1.5rem 2rem;
   flex-wrap: wrap;
 }
-.wordmark { font-variation-settings: 'wdth' 82, 'wght' 800; font-size: 1.25rem; letter-spacing: -.02em; }
+.wordmark { font-variation-settings: 'wdth' 92, 'wght' 700; font-size: 1.2rem; letter-spacing: -.03em; }
 .masthead nav { display: flex; gap: 1.4rem; flex-wrap: wrap; }
 .masthead a { color: var(--slate); text-decoration: none; font-size: .92rem; }
 .masthead a:hover { color: var(--ink); }

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pier — turn your site into a Mac app</title>
+<title>Pier — turn your site into a desktop app</title>
 <meta name="description" content="Pier reads your web app manifest and builds a real desktop app: its own window, its own menus, a Dock icon, and the files, ports and devices a browser will not hand over.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0B1315">
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -28,7 +28,7 @@
 <main>
 
 <section class="hero">
-  <h1>Turn your site into a Mac app</h1>
+  <h1>Turn your site into a desktop app</h1>
   <p class="lede">
     Pier reads the web app manifest you already ship and builds a real desktop
     app around your site: its own window, its own menus, a Dock icon, and the
@@ -52,7 +52,7 @@
     <div class="row-source">
       <h3><code>name</code>, <code>icons</code></h3>
       <p>The app takes its name and icon from the manifest. A square PWA icon is
-         fitted to the macOS tile; one with its own shape is left alone.</p>
+         fitted to the system’s icon tile; one with its own shape is left alone.</p>
 <pre><code>{
   "name": "Phonotheque",
   "id": "/app",
@@ -138,7 +138,7 @@
           </tr>
           <tr>
             <th scope="row"><code>camera</code> <code>microphone</code> <code>location</code> <code>screen</code></th>
-            <td>Ask macOS. The system prompts, the system decides, and Pier cannot work around the answer</td>
+            <td>Ask the operating system. It prompts, it decides, and Pier cannot work around the answer</td>
           </tr>
         </tbody>
       </table>
