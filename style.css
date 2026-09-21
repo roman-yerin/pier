@@ -103,6 +103,8 @@ pre code { font-size: 1em; }
 .masthead a:hover { color: var(--ink); }
 
 main { padding: 0 var(--side); }
+section { padding-block: clamp(2.5rem, 5vw, 4rem); }
+.section-lede { color: var(--slate); margin: 0 0 2.4rem; max-width: 42rem; }
 
 /* ---------- Hero ---------- */
 
@@ -159,7 +161,6 @@ main { padding: 0 var(--side); }
 
 /* ---------- Три довода: работы по упаковке нет вовсе ---------- */
 
-.nothing { padding: clamp(2.5rem, 5vw, 4rem) 0 0; }
 .nothing h2 { margin-bottom: 2rem; }
 .claims {
   display: grid;
@@ -173,14 +174,7 @@ main { padding: 0 var(--side); }
 
 /* ---------- Разделы страницы ---------- */
 
-.spine { padding-top: clamp(2.5rem, 5vw, 4rem); }
-.spine-title {
-  padding-bottom: 1.4rem;
-  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
-  font-variation-settings: 'wdth' 100, 'wght' 600;
-  letter-spacing: 0;
-  color: var(--slate);
-}
+.spine h2, .nothing h2 { margin-bottom: 2rem; }
 
 /* Линия между строками — сама конструкция страницы, а не украшение:
    она отделяет один ключ манифеста от другого. */
@@ -300,7 +294,7 @@ pre.url { margin-top: 0; }
 
 /* ---------- Limits, closing, footer ---------- */
 
-#limits, .closing { border-top: 1px solid var(--rule); padding: clamp(2.4rem, 5vw, 4rem) 0; }
+#limits, .closing { border-top: 1px solid var(--rule); }
 .limits { list-style: none; padding: 0; margin: 1.6rem 0 0; display: grid; gap: .8rem; max-width: 46rem; }
 .limits li { color: var(--slate); padding-left: 1.4rem; position: relative; }
 .limits li::before { content: ""; position: absolute; left: 0; top: .7em; width: .7rem; height: 1px; background: var(--blue); }

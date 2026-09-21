@@ -18,9 +18,9 @@
 <header class="masthead">
   <span class="wordmark">Pier</span>
   <nav>
-    <a href="#users">What your users get</a>
-    <a href="#code">What your code gets</a>
-    <a href="#ship">What you write</a>
+    <a href="#nothing">No app to build</a>
+    <a href="#users">For your users</a>
+    <a href="#code">For your code</a>
     <a href="reference.html">Reference</a>
     <a href="https://github.com/roman-yerin/pier">GitHub</a>
   </nav>
@@ -39,10 +39,9 @@
   <div class="hero-body">
   <h1>Your site is the desktop app</h1>
   <p class="lede">
-    There is no app to build. No bundle to package, nothing to sign or submit,
-    no second release train. You deploy your site the way you always do, and the
-    app is your site — in its own window, with the files, ports and devices a
-    browser will not hand over.
+    Pier is a small runtime on the person’s Mac. It reads the web app manifest
+    you already ship and opens your site in a window of its own, with the files,
+    ports and devices a browser keeps out of reach.
   </p>
   <div class="hero-side">
     <div class="actions">
@@ -81,14 +80,14 @@
 </section>
 
 <section id="users" class="spine">
-  <h2 class="spine-title">What your users get</h2>
+  <h2>What your users get</h2>
 
   <article class="row">
     <div class="row-source">
       <h3 class="plain">A window, not a tab</h3>
-      <p>Tabs, the address bar and someone else’s buttons go away. The page runs
-         the same code it always did, now with its own window, its own menus and
-         keyboard shortcuts, and a Dock icon that behaves like any other app.</p>
+      <p>Tabs, the address bar and someone else’s buttons go away, and the page
+         runs the same code it always did. It gets a real titlebar, a menu bar of
+         its own and keyboard shortcuts that work even when the window is hidden.</p>
       <p>A link outside your scope opens in the browser, so the app stays your
          app.</p>
     </div>
@@ -113,24 +112,22 @@
 
   <article class="row">
     <div class="row-source">
-      <h3 class="plain">An app they can find and keep</h3>
-      <p>Installed apps live in <code>~/Applications/Pier</code>, so Spotlight and
-         Launchpad find them like anything else. Closing the window leaves the app
-         running: audio keeps playing, connections stay up, notifications still
-         arrive.</p>
-      <p>Sign-ins survive quitting, and the app opens on the page the person
-         was on when they left the tab.</p>
+      <h3 class="plain">An app that keeps running</h3>
+      <p>Closing the window does not kill it: audio keeps playing, connections
+         stay up, notifications still arrive. Sign-ins survive quitting, and the
+         first launch opens on the page the person was reading in the tab.</p>
     </div>
     <figure class="row-result">
       <img src="pier-home.png" alt="The Pier window listing two installed apps" width="1400" height="430">
-      <figcaption>Two sites, installed as apps. Removing one is dragging it to
-        the Trash.</figcaption>
+      <figcaption>Apps land in <code>~/Applications/Pier</code>, so Spotlight and
+        Launchpad find them like any other. Removing one is dragging it to the
+        Trash.</figcaption>
     </figure>
   </article>
 </section>
 
 <section id="code" class="spine">
-  <h2 class="spine-title">What your code gets</h2>
+  <h2>What your code gets</h2>
   <p class="section-lede">
     <code>window.epwa</code> appears only inside the app, so the same code still
     runs in any browser. Declare what you need in the manifest; anything you did
@@ -174,7 +171,7 @@
 </section>
 
 <section id="ship" class="spine">
-  <h2 class="spine-title">What you write</h2>
+  <h2>What you write</h2>
   <p class="section-lede">
     Two things, once: a few keys in the manifest you probably already have, and a
     button that opens an <code>epwa://</code> link. That is the whole integration.
@@ -228,9 +225,8 @@ button.onclick = () =&gt; launchApp({
 
 <section class="closing">
   <h2>Install it and see</h2>
-  <p>Pier needs no admin rights and keeps itself up to date. Try it on your own
-     site: add the manifest keys, drop in the button, and the next click opens
-     your site as an app.</p>
+  <p>Point it at a site you are working on and watch the tab become an app. Pier
+     updates itself, so this is the only download.</p>
   <div class="actions">
     <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Download Pier</a>
     <a class="button" href="reference.html">Read the reference</a>
