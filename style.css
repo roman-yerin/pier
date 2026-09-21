@@ -166,7 +166,7 @@ section { padding-block: var(--gap); }
 }
 
 /* Браузер схлопывается, окно проявляется — один цикл читается как превращение. */
-.chrome-browser { padding: .5rem .6rem; animation: browser-out 4.6s ease-in-out infinite; }
+.chrome-browser { position: relative; padding: .5rem .6rem; animation: browser-out 4.6s ease-in-out infinite; }
 .tabs { display: flex; gap: .3rem; }
 .tab {
   height: 1.3rem; width: 4.4rem; border-radius: 5px 5px 0 0;
@@ -186,9 +186,13 @@ section { padding-block: var(--gap); }
   color: var(--muted);
   display: flex; align-items: center; gap: .4rem;
 }
+.urlbar .bar { width: 45%; height: .34rem; }
 .lock { width: 7px; height: 9px; border-radius: 2px; background: var(--tide); flex: none; }
 
 .chrome-app {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100%;
   display: flex; align-items: center; gap: .7rem;
   padding: .55rem .7rem;
   animation: app-in 4.6s ease-in-out infinite;
@@ -204,13 +208,14 @@ section { padding-block: var(--gap); }
   background: linear-gradient(135deg, color-mix(in srgb, var(--cedar) 55%, transparent), color-mix(in srgb, var(--tide) 45%, transparent));
 }
 
+/* Меняется только прозрачность: max-height менял бы высоту всей страницы. */
 @keyframes browser-out {
-  0%, 34% { max-height: 4.5rem; opacity: 1; }
-  46%, 100% { max-height: 0; opacity: 0; padding-block: 0; border-bottom-width: 0; }
+  0%, 34% { opacity: 1; }
+  46%, 100% { opacity: 0; }
 }
 @keyframes app-in {
-  0%, 38% { max-height: 0; opacity: 0; padding-block: 0; border-bottom-width: 0; }
-  50%, 100% { max-height: 3rem; opacity: 1; }
+  0%, 38% { opacity: 0; }
+  50%, 100% { opacity: 1; }
 }
 @keyframes lift {
   0%, 34% { transform: none; box-shadow: var(--shadow); }
@@ -219,7 +224,7 @@ section { padding-block: var(--gap); }
 
 @media (prefers-reduced-motion: reduce) {
   .frame, .chrome-browser, .chrome-app { animation: none; }
-  .chrome-browser { display: none; }
+  .chrome-browser { visibility: hidden; }   /* место сохраняем, высоту рамки — тоже */
 }
 
 .lights { display: inline-flex; gap: .45rem; }
