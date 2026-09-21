@@ -60,56 +60,57 @@
   <h2>You can already install a PWA</h2>
   <p class="section-lede">
     Chrome and Safari put your site in a window without tabs, and for many sites
-    that is enough. It is still the browser: the page lives as long as the window,
-    reaches what the web platform allows, and borrows someone else’s menus.
+    that is enough. It is still the browser, so what your page can reach depends
+    on which one the person opened. This is what changes when Pier opens the same
+    site instead.
   </p>
 
   <table class="versus">
     <thead>
-      <tr><th scope="col">Installed from the browser</th><th scope="col">Opened by Pier</th></tr>
+      <tr>
+        <td></td>
+        <th scope="col">Installed from the browser</th>
+        <th scope="col">Opened by Pier</th>
+      </tr>
     </thead>
     <tbody>
       <tr>
-        <td>A window without tabs. The menu bar, the Dock menu and the shortcuts
-            belong to the browser.</td>
-        <td>A titlebar you draw yourself, your own menu bar and Dock menu, and
-            shortcuts that fire while the window is hidden.</td>
+        <th scope="row">Hardware</th>
+        <td>Chromium only, and it refuses whole classes of device outright;
+            Safari and Firefox have none of it</td>
+        <td>Real serial ports, USB endpoints, HID reports, Bluetooth and MIDI —
+            what a native app gets, minus input devices and security keys</td>
       </tr>
       <tr>
-        <td>Closing the window ends the page. Background work is a service worker
-            the browser may stop at any moment.</td>
-        <td>The app keeps running with no window: audio plays on, sockets stay
-            open, notifications still arrive.</td>
+        <th scope="row">Network</th>
+        <td>Fetch under CORS, WebSocket</td>
+        <td>Fetch without CORS, TCP, TLS, UDP, Bonjour</td>
       </tr>
       <tr>
-        <td>Files through the File System Access sandbox in Chrome; in Safari, a
-            download and an upload.</td>
-        <td>System open and save panels, then read, write, watch and trash what
-            the person picked — across launches.</td>
+        <th scope="row">Files</th>
+        <td>A sandbox in Chrome, uploads in Safari</td>
+        <td>System panels, and what was picked stays readable</td>
       </tr>
       <tr>
-        <td>Fetch under CORS and WebSocket. No raw sockets, no listening for a
-            connection, no Bonjour.</td>
-        <td>Fetch without CORS, TCP, TLS and UDP sockets, Bonjour, and incoming
-            connections on loopback.</td>
+        <th scope="row">Closed window</th>
+        <td>The page stops</td>
+        <td>Audio, sockets and notifications keep going</td>
       </tr>
       <tr>
-        <td>Serial, USB and HID in Chromium only; nothing of the sort in Safari
-            or Firefox.</td>
-        <td>Serial, USB, HID, Bluetooth and MIDI through the system chooser,
-            the same API wherever Pier runs.</td>
+        <th scope="row">Secrets</th>
+        <td><code>localStorage</code></td>
+        <td>Keychain, behind Touch ID</td>
       </tr>
       <tr>
-        <td>Secrets live in <code>localStorage</code>, where any script on the
-            origin can read them.</td>
-        <td>Secrets live in the Keychain, behind Touch ID when you ask for it.</td>
+        <th scope="row">Menus</th>
+        <td>The browser’s</td>
+        <td>Your own menu bar, Dock menu and global shortcuts</td>
       </tr>
     </tbody>
   </table>
 
-  <p class="note">The trade is the install: a PWA installs from the browser the
-    person already has, a Pier app needs Pier first. Everything above is why that
-    download is worth asking for — and if none of it is, install the PWA.</p>
+  <p class="note">The trade is the install: a PWA needs the browser people
+    already have, a Pier app needs Pier first.</p>
 </section>
 
 <!-- Первое, что нужно знать человеку с сайтом: работы по упаковке нет вовсе.

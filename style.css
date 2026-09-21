@@ -215,15 +215,13 @@ pre.url { margin-top: 0; }
 
 /* ---------- Сравнение с установленным PWA ---------- */
 
-/* Та же конструкция, что у остальной страницы: слева то, что есть сейчас,
-   справа то, что даёт Pier; колонки равные, потому что это спор равных,
-   а не список свойств с подписями. */
+/* Строку держит тема слева: глаз идёт по коротким названиям, а не читает
+   два абзаца подряд. В ячейках — несколько слов, не предложения. */
 .versus { width: 100%; border-collapse: collapse; font-size: .94rem; }
 .versus th, .versus td {
   text-align: left;
   vertical-align: top;
-  padding: .9rem 1.5rem .9rem 0;
-  width: 50%;
+  padding: .85rem 1.5rem .85rem 0;
 }
 .versus thead th {
   font-size: .8rem;
@@ -232,8 +230,14 @@ pre.url { margin-top: 0; }
   padding-bottom: .4rem;
 }
 .versus tbody tr { border-top: 1px solid var(--rule); }
-.versus td:first-child { color: var(--slate); }
-.versus td:last-child { color: var(--ink); }
+.versus tbody th {
+  width: 9rem;
+  font-variation-settings: 'wght' 600;
+  font-size: .9rem;
+}
+.versus td { width: calc((100% - 9rem) / 2); }
+.versus tbody td:first-of-type { color: var(--slate); }
+.versus tbody td:last-child { color: var(--ink); }
 .versus code { color: var(--blue); }
 
 /* ---------- The one animation: browser chrome collapses into a window ---------- */
@@ -342,21 +346,15 @@ footer {
   .row { grid-template-columns: minmax(0, 1fr); }
   .api tbody th { width: auto; display: block; padding-bottom: .2rem; }
   .api tbody td { display: block; }
-  /* Узкий экран: сравнение читается парами, одна под другой. Заголовки колонок
-     уходят, поэтому каждая половина пары называет себя сама — иначе непонятно,
-     где чьё. */
+  /* Узкий экран: тема, под ней две строки. Заголовки колонок уходят, поэтому
+     каждая строка называет источник сама — иначе непонятно, где чьё. */
   .versus thead { display: none; }
-  .versus td { display: block; width: auto; padding: .2rem 0; }
-  .versus td:first-child { padding-top: .9rem; }
-  .versus td:last-child { padding-bottom: .9rem; }
-  .versus td::before {
-    display: block;
-    color: var(--slate);
-    font-size: .78rem;
-    margin-bottom: .1rem;
-  }
-  .versus td:first-child::before { content: 'From the browser'; }
-  .versus td:last-child::before { content: 'From Pier'; }
+  .versus tbody th { display: block; width: auto; padding: .9rem 0 .3rem; }
+  .versus tbody td { display: block; width: auto; padding: .1rem 0; }
+  .versus tbody td:last-child { padding-bottom: .9rem; }
+  .versus tbody td::before { color: var(--slate); font-size: .8rem; }
+  .versus tbody td:first-of-type::before { content: 'Browser: '; }
+  .versus tbody td:last-child::before { content: 'Pier: '; }
 }
 
 /* Подсветка: ультрамарин уже занят ключами манифеста в тексте страницы, поэтому
