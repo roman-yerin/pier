@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pier — сайт становится настольным приложением</title>
-<meta name="description" content="Pier собирает настольное приложение из сайта с web app manifest: своё окно, меню, иконка в Dock и нативные возможности через window.epwa.">
+<title>Pier — turn your site into a Mac app</title>
+<meta name="description" content="Pier reads your web app manifest and builds a real desktop app: its own window, its own menus, a Dock icon, and the files, ports and devices a browser will not hand over.">
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#0B1B24">
+<meta name="theme-color" content="#0B1315">
 <link rel="icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -18,91 +18,141 @@
 <header class="masthead">
   <span class="wordmark">Pier</span>
   <nav>
-    <a href="#connect">Подключить сайт</a>
-    <a href="#api">Возможности</a>
-    <a href="#limits">Границы</a>
+    <a href="#manifest">How it reads your manifest</a>
+    <a href="#permissions">Permissions</a>
+    <a href="#limits">Limits</a>
     <a href="https://github.com/roman-yerin/pier">GitHub</a>
   </nav>
 </header>
 
 <main>
 
-<!-- Герой — разбор настоящего окна: снимок с выносками, а не иллюстрация
-     рядом с текстом. Пустое поле окна и есть место для подписей. -->
 <section class="hero">
-  <h1>Сайт становится приложением</h1>
-
-  <figure class="shot">
-    <img src="pier-home.png" alt="Окно Pier со списком установленных приложений: Фонотека и Mail" width="1400" height="430">
-    <p class="note note-window">Настоящее окно: кнопки, полный экран, размер и место между запусками</p>
-    <p class="note note-apps">Сайты, ставшие приложениями. Их находят Launchpad и&nbsp;Spotlight</p>
-    <figcaption>Окно Pier: два сайта, ставшие приложениями. Их находят Launchpad и Spotlight.</figcaption>
-  </figure>
-
-  <div class="hero-side">
-    <p class="lede">
-      Pier собирает приложение из сайта с web app manifest. Своё окно, своё меню,
-      своя иконка в Dock — и файлы, порты и устройства, которых в браузере нет.
-    </p>
-    <div class="actions">
-      <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Скачать Pier</a>
-      <a class="button ghost" href="#connect">Подключить свой сайт</a>
-    </div>
-    <p class="fineprint" id="fineprint">0.5.0, macOS 14 и новее, 3,2 МБ, подписан и нотаризован</p>
-  </div>
-</section>
-
-<section id="how" class="how">
-  <div class="how-text">
-    <h2>Как это работает</h2>
-    <ol class="steps">
-      <li>Пользователь ставит Pier — один раз, без прав администратора.</li>
-      <li>На сайте нажимает кнопку: Pier читает манифест, показывает, что за сайт
-          и чего он просит, и собирает приложение.</li>
-      <li>Приложение открывается там же, где человек был во вкладке.</li>
-    </ol>
-  </div>
-
-  <!-- Единственное движение на странице: браузерная обвязка уходит, остаётся окно. -->
-  <div class="stage" aria-hidden="true">
-    <div class="frame">
-      <div class="chrome-browser">
-        <div class="tabs"><span class="tab active">Фонотека</span><span class="tab"></span><span class="tab"></span></div>
-        <div class="urlbar"><span class="lock"></span><span class="bar w50"></span></div>
-      </div>
-      <div class="chrome-app">
-        <span class="lights"><i></i><i></i><i></i></span>
-        <span class="app-name">Фонотека</span>
-      </div>
-      <div class="page">
-        <div class="page-side"><span class="bar w70"></span><span class="bar w50"></span><span class="bar w60"></span><span class="bar w40"></span></div>
-        <div class="page-main"><div class="art"></div><span class="bar w80"></span><span class="bar w60"></span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="connect">
-  <h2>Что нужно от сайта</h2>
-  <p class="section-lede">
-    Манифест и кнопка. Сайт остаётся сайтом и работает в любом браузере:
-    <code>window.epwa</code> появляется только внутри приложения.
+  <h1>Turn your site into a Mac app</h1>
+  <p class="lede">
+    Pier reads the web app manifest you already ship and builds a real desktop
+    app around your site: its own window, its own menus, a Dock icon, and the
+    files, ports and devices a browser will not hand over.
   </p>
+  <div class="hero-side">
+    <div class="actions">
+      <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Download Pier</a>
+      <a class="button" href="#manifest">See what it reads</a>
+    </div>
+    <p class="fineprint" id="fineprint">0.5.0, macOS 14 and later, 3.2 MB, signed and notarized</p>
+  </div>
+</section>
 
-  <div class="code-pair">
-    <figure>
-      <figcaption>manifest.webmanifest</figcaption>
+<!-- Спина страницы: манифест, прочитанный по ключам. Слева то, что пишет
+     разработчик, справа то, что из этого получает пользователь. -->
+<section id="manifest" class="spine">
+  <h2 class="spine-title">Your manifest, key by key</h2>
+
+  <article class="row">
+    <div class="row-source">
+      <h3><code>name</code>, <code>icons</code></h3>
+      <p>The app takes its name and icon from the manifest. A square PWA icon is
+         fitted to the macOS tile; one with its own shape is left alone.</p>
 <pre><code>{
-  "name": "Фонотека",
+  "name": "Phonotheque",
   "id": "/app",
-  "start_url": "/app",
-  "display": "standalone",
-  "icons": [{ "src": "/icon-512.png", "sizes": "512x512" }],
-  "epwa": { "permissions": ["files", "midi"] }
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512" }]
 }</code></pre>
+    </div>
+    <figure class="row-result">
+      <img src="pier-home.png" alt="The Pier window listing two installed apps, Phonotheque and Mail" width="1400" height="430">
+      <figcaption>Installed apps land in <code>~/Applications/Pier</code>, so Spotlight
+        and Launchpad find them like any other app.</figcaption>
     </figure>
-    <figure>
-      <figcaption>кнопка на странице</figcaption>
+  </article>
+
+  <article class="row">
+    <div class="row-source">
+      <h3><code>display</code>, <code>scope</code></h3>
+      <p>Tabs, the address bar and someone else’s buttons go away. Your page runs
+         the same code it always did, now inside a window of its own. A link
+         outside the scope opens in the browser.</p>
+<pre><code>{
+  "display": "standalone",
+  "start_url": "/app",
+  "scope": "/app"
+}</code></pre>
+    </div>
+    <!-- Единственное движение на странице, и стоит оно ровно там, где объясняет
+         конкретный ключ: "display": "standalone" убирает браузерную обвязку. -->
+    <div class="row-result stage" aria-hidden="true">
+      <div class="frame">
+        <div class="chrome-browser">
+          <div class="tabs"><span class="tab active">Phonotheque</span><span class="tab"></span><span class="tab"></span></div>
+          <div class="urlbar"><span class="lock"></span><span class="bar w50"></span></div>
+        </div>
+        <div class="chrome-app">
+          <span class="lights"><i></i><i></i><i></i></span>
+          <span class="app-name">Phonotheque</span>
+        </div>
+        <div class="page">
+          <div class="page-side"><span class="bar w70"></span><span class="bar w50"></span><span class="bar w60"></span><span class="bar w40"></span></div>
+          <div class="page-main"><div class="art"></div><span class="bar w80"></span><span class="bar w60"></span></div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <article class="row" id="permissions">
+    <div class="row-source">
+      <h3><code>epwa.permissions</code></h3>
+      <p>Declare what your site needs. Pier shows the list in the install dialog
+         and bakes it into the app; anything you did not declare answers with an
+         error, even when your code asks for it.</p>
+<pre><code>{
+  "epwa": {
+    "permissions": ["files", "midi"]
+  }
+}</code></pre>
+    </div>
+    <div class="row-result">
+      <table class="api">
+        <thead>
+          <tr><th scope="col">Declare</th><th scope="col">And your page can</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">nothing</th>
+            <td>Drive the window and titlebar, fill the menu bar and the Dock menu, register global shortcuts, keep running in the background, store secrets in the Keychain, ask for Touch ID</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>files</code></th>
+            <td>Open and save through system panels, then read, write, watch and trash what the person picked — across launches, without ever seeing a path</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>network</code></th>
+            <td>Fetch without CORS, open TCP, TLS and UDP sockets, browse Bonjour, accept incoming connections (loopback unless the person allows more)</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>serial</code> <code>usb</code> <code>hid</code> <code>bluetooth</code> <code>midi</code></th>
+            <td>Talk to the device the person picked in the system chooser. Keyboards, pointers and security keys are never handed over</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>notifications</code></th>
+            <td>Post native notifications with buttons, a reply field and attachments, and hear about every click</td>
+          </tr>
+          <tr>
+            <th scope="row"><code>camera</code> <code>microphone</code> <code>location</code> <code>screen</code></th>
+            <td>Ask macOS. The system prompts, the system decides, and Pier cannot work around the answer</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">144 methods and 50 events in total. The full reference is
+        <code>docs/bridge-api.md</code>, generated from the same spec the runtime
+        is tested against.</p>
+    </div>
+  </article>
+
+  <article class="row">
+    <div class="row-source">
+      <h3 class="plain">One button on your page</h3>
+      <p>The helper is a single file, no build step. It hides itself where Pier
+         cannot run, and hands the app whatever state the visitor had in the tab.</p>
 <pre><code>import { canInstallApp, launchApp } from './pier-launch.js';
 
 button.hidden = !canInstallApp();
@@ -111,86 +161,39 @@ button.onclick = () =&gt; launchApp({
   handoff: { track: player.currentTrack },
   onLaunched: () =&gt; player.pause(),
 });</code></pre>
-    </figure>
-  </div>
-
-  <p class="aside">Проверить манифест до публикации: <code>web-runtime check &lt;адрес&gt;</code>.</p>
-</section>
-
-<section id="api">
-  <h2>Что появляется у сайта</h2>
-  <p class="section-lede">
-    144 метода и 50 событий. Незаявленное в манифесте отвечает отказом, даже если
-    код его зовёт.
-  </p>
-
-  <table class="api">
-    <thead>
-      <tr><th scope="col">Группа</th><th scope="col">Разрешение</th><th scope="col">Что даёт</th></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">Окно и титлбар</th>
-        <td class="perm">не нужно</td>
-        <td>Полный экран, поверх всех окон, размер и место между запусками, именованные рамки вроде мини-плеера, нативные материалы, свои drag-области, перехват закрытия</td>
-      </tr>
-      <tr>
-        <th scope="row">Меню и Dock</th>
-        <td class="perm">не нужно</td>
-        <td>Главное меню и меню в Dock из JSON, контекстные меню, значок в строке меню, иконка с прогрессом и бейджем, глобальные сочетания клавиш</td>
-      </tr>
-      <tr>
-        <th scope="row">Файлы</th>
-        <td class="perm"><code>files</code></td>
-        <td>Открыть и сохранить, читать и писать, следить за изменениями, убрать в Корзину. Выбор пользователя живёт между запусками, путей страница не видит</td>
-      </tr>
-      <tr>
-        <th scope="row">Сеть</th>
-        <td class="perm"><code>network</code></td>
-        <td>HTTP без CORS, сокеты TCP, TLS и UDP, обзор Bonjour, приём входящих соединений — по умолчанию только на петле</td>
-      </tr>
-      <tr>
-        <th scope="row">Устройства</th>
-        <td class="perm"><code>serial</code> <code>usb</code> <code>hid</code> <code>bluetooth</code> <code>midi</code></td>
-        <td>Порты, USB без драйвера, HID, Bluetooth LE и MIDI. Устройство выбирает пользователь; клавиатуры, мыши и ключи безопасности — никогда</td>
-      </tr>
-      <tr>
-        <th scope="row">Фон и уведомления</th>
-        <td class="perm"><code>notifications</code></td>
-        <td>Окно закрыто — приложение живёт: играет звук, держит соединения, показывает уведомления с кнопками и полем ответа</td>
-      </tr>
-      <tr>
-        <th scope="row">Система</th>
-        <td class="perm">не нужно</td>
-        <td>Не давать компьютеру засыпать, секреты в Связке ключей, Touch ID, буфер обмена, автозапуск при входе</td>
-      </tr>
-      <tr>
-        <th scope="row">Через диалоги macOS</th>
-        <td class="perm"><code>camera</code> <code>microphone</code> <code>location</code> <code>screen</code></td>
-        <td>Камера, микрофон, геопозиция и запись экрана: спрашивает система, Pier только передаёт запрос</td>
-      </tr>
-    </tbody>
-  </table>
+    </div>
+    <div class="row-result">
+      <p class="opens">The click opens</p>
+<pre class="url"><code>epwa://launch?manifest=…&amp;handoff=…</code></pre>
+      <p class="note">Pier fetches the manifest over https, shows the person what
+        the site is and what it asks for, builds the app, and opens it on the
+        track they were playing. Already installed? It just opens.</p>
+      <p class="note">Lint a manifest before you publish it:
+        <code>web-runtime check &lt;url&gt;</code>.</p>
+    </div>
+  </article>
 </section>
 
 <section id="limits">
-  <h2>Чего приложение не может</h2>
+  <h2>What the app cannot do</h2>
   <ul class="limits">
-    <li>Мост отвечает только главному фрейму своего origin: рекламный iframe,
-        всплывающее окно входа и чужая страница получают отказ.</li>
-    <li>Файлы, порты и устройства приходят только через системный выбор.</li>
-    <li>Ссылка за пределы области приложения открывается в браузере, а устройства
-        и соединения прежней страницы закрываются.</li>
-    <li>Границы проверяются тестами при каждой сборке, а не обещаны на словах.</li>
+    <li>The bridge answers the main frame of your own origin. An ad iframe, a
+        login popup and any other site get an error.</li>
+    <li>Files, ports and devices arrive only through a system chooser. The page
+        never browses the disk.</li>
+    <li>Leaving your scope opens the browser and closes the devices and
+        connections the previous page held.</li>
+    <li>These limits are checked by tests on every build, not promised in prose.</li>
   </ul>
 </section>
 
 <section class="closing">
-  <h2>Поставить и попробовать</h2>
-  <p>Приложения складываются в <code>~/Applications/Pier</code>. Удалить — перетащить в Корзину.</p>
+  <h2>Install it and see</h2>
+  <p>Pier is signed with a Developer ID and notarized, so it opens without
+     warnings and needs no admin rights. To remove an app, drag it to the Trash.</p>
   <div class="actions">
-    <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Скачать Pier</a>
-    <a class="button" href="https://github.com/roman-yerin/pier/releases">Все выпуски</a>
+    <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Download Pier</a>
+    <a class="button" href="https://github.com/roman-yerin/pier/releases">All releases</a>
   </div>
 </section>
 
@@ -198,7 +201,7 @@ button.onclick = () =&gt; launchApp({
 
 <footer>
   <span>Pier 0.5.0, ePWA API 3.0</span>
-  <span>Windows и Linux — в плане</span>
+  <span>Windows and Linux are planned</span>
 </footer>
 
 <script type="module" src="site.js"></script>

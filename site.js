@@ -3,6 +3,6 @@
 const fineprint = document.getElementById('fineprint');
 
 if (fineprint && !/Mac/.test(navigator.platform || '')) {
-  fineprint.textContent = 'Версия 0.5.0 · пока только macOS 14 и новее · Windows и Linux в плане';
+  fineprint.textContent = '0.5.0, macOS 14 and later only — Windows and Linux are planned';
   document.querySelectorAll('[data-download]').forEach((a) => a.classList.remove('primary'));
 }

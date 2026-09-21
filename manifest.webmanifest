@@ -5,8 +5,14 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0C1A22",
-  "theme_color": "#0C1A22",
-  "description": "Сайт с web app manifest становится настольным приложением.",
-  "icons": [{ "src": "icon.png", "sizes": "512x512", "type": "image/png" }]
+  "background_color": "#0B1315",
+  "theme_color": "#0B1315",
+  "description": "A site with a web app manifest becomes a desktop app.",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }

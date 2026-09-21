@@ -1,41 +1,35 @@
-/* Pier — сайт продукта.
+/* Pier — product page.
 
-   Замысел: страница разбирает настоящее окно, а не рассказывает о нём.
-   Отсюда две вещи. Первая — заголовок набран узким начертанием Archivo
-   (ось wdth, 70 из 62–125): характер держит ось шрифта, а не кегль и жир.
-   Вторая — снимок окна с выносками: пустое поле окна и есть место для
-   подписей, так снимок становится схемой.
+   Замысел: страница и есть манифест, прочитанный по ключам. Каждая строка —
+   слева то, что разработчик пишет, справа то, что из этого получает
+   пользователь; хайрлайн между строками держит всю страницу. Единственная
+   анимация стоит в строке "display": "standalone" — том самом ключе, который
+   убирает браузерную обвязку.
 
-   Палитра из предмета: пирс это дерево над водой — глубокая вода, туман,
-   отлив и кедровая доска. Кедровый работает только на действиях, выносках
-   и номерах шагов; больше нигде. */
+   Шрифты: Bricolage Grotesque (оси opsz и wdth — заголовки узкие и плотные,
+   текст обычный) и IBM Plex Mono только там, где настоящий код.
+   Цвет: бумага, чернила и один ультрамарин на действиях и ключах. */
 
 :root {
-  --ink: #0B1B24;
-  --fog: #EDF1F2;
-  --cedar: #C0782E;
-  --tide: #6FA0B4;
+  --paper: #F6F7F5;
+  --ink: #101C1E;
+  --blue: #1B3BD8;
+  --slate: #5B6B6E;
+  --rule: #D6DCDA;
+  --raise: #FFFFFF;
 
-  --bg: var(--fog);
-  --surface: #FFFFFF;
-  --text: var(--ink);
-  --muted: #4C646F;
-  --line: #CBD8DE;
-  --shadow: 0 1px 2px rgba(11, 27, 36, .07), 0 14px 34px rgba(11, 27, 36, .10);
-
-  --page: 74rem;
+  --page: 76rem;
   --side: max(clamp(1.1rem, 5vw, 3.5rem), calc(50vw - var(--page) / 2));
-  --gap: clamp(3.5rem, 7vw, 6rem);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: var(--ink);
-    --surface: #142A36;
-    --text: var(--fog);
-    --muted: #93ABB6;
-    --line: #27414F;
-    --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 16px 40px rgba(0, 0, 0, .45);
+    --paper: #0B1315;
+    --ink: #E8EDEB;
+    --blue: #8AA2FF;
+    --slate: #93A5A7;
+    --rule: #1F2C2F;
+    --raise: #121E21;
   }
 }
 
@@ -43,173 +37,158 @@
 
 body {
   margin: 0;
-  overflow-x: clip;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Archivo, system-ui, -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-variation-settings: 'wdth' 100, 'opsz' 14;
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2 { margin: 0; line-height: 1; text-wrap: balance; }
-
-/* Узкое начертание — главный приём страницы, поэтому оно только у заголовков. */
-h1 {
-  font-variation-settings: 'wdth' 70, 'wght' 700;
-  font-size: clamp(3.4rem, 11vw, 8.5rem);
-  line-height: .92;
-  letter-spacing: -.012em;
+h1, h2 {
+  margin: 0;
+  font-variation-settings: 'wdth' 82, 'opsz' 96, 'wght' 700;
+  line-height: .96;
+  letter-spacing: -.02em;
+  text-wrap: balance;
 }
-h2 {
-  font-variation-settings: 'wdth' 78, 'wght' 650;
-  font-size: clamp(2rem, 4.4vw, 3.2rem);
-  letter-spacing: -.008em;
+h1 { font-size: clamp(3rem, 8.5vw, 6.5rem); }
+h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
+
+h3 {
+  margin: 0;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: .95rem;
+  font-weight: 500;
 }
 
-p { margin: .8em 0 0; max-width: 34rem; }
+p { margin: .85em 0 0; max-width: 36rem; }
 a { color: inherit; }
 
 code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: .86em;
-  background: color-mix(in srgb, var(--tide) 16%, transparent);
-  padding: .1em .35em;
-  border-radius: 4px;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: .88em;
 }
+h3 code { color: var(--blue); }
+h3.plain { font-family: inherit; font-size: 1.05rem; font-variation-settings: 'wdth' 100, 'wght' 650; }
 
-/* ---------- Шапка и герой: одно тёмное поле ---------- */
+pre {
+  margin: 1.2rem 0 0;
+  padding: 1rem 1.1rem;
+  background: var(--raise);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: .8rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+pre code { font-size: 1em; }
+
+/* ---------- Header ---------- */
 
 .masthead {
-  background: var(--ink);
-  color: var(--fog);
-  padding: 1.5rem var(--side) 0;
+  padding: 1.6rem var(--side);
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1.5rem 2rem;
   flex-wrap: wrap;
 }
-.wordmark { font-variation-settings: 'wdth' 118, 'wght' 700; font-size: 1.2rem; letter-spacing: -.02em; }
+.wordmark { font-variation-settings: 'wdth' 82, 'wght' 800; font-size: 1.25rem; letter-spacing: -.02em; }
 .masthead nav { display: flex; gap: 1.4rem; flex-wrap: wrap; }
-.masthead a { color: #7F9CA9; text-decoration: none; font-size: .94rem; }
-.masthead a:hover { color: var(--fog); }
+.masthead a { color: var(--slate); text-decoration: none; font-size: .92rem; }
+.masthead a:hover { color: var(--ink); }
 
-main { max-width: var(--page); margin: 0 auto; padding: 0 clamp(1.1rem, 5vw, 3.5rem); }
-section { padding-block: var(--gap); }
-.section-lede { color: var(--muted); margin-bottom: 2.2rem; }
+main { padding: 0 var(--side); }
+
+/* ---------- Hero ---------- */
 
 .hero {
-  background: var(--ink);
-  color: var(--fog);
-  margin-inline: calc(50% - 50vw);
-  padding: clamp(2rem, 4vw, 3.5rem) var(--side) 0;
+  padding: clamp(1rem, 3vw, 2.5rem) 0 clamp(3rem, 6vw, 5rem);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-  column-gap: clamp(1.5rem, 4vw, 3.5rem);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: end;
 }
-/* Заголовок во всю ширину — единственный громкий элемент страницы. */
 .hero h1 { grid-column: 1 / -1; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
-.hero-side { grid-column: 1; padding-bottom: clamp(2rem, 4vw, 3.5rem); }
-.hero .lede { color: #A6BEC9; font-size: 1.1rem; max-width: 24rem; margin-top: 0; }
-.hero .fineprint { color: #74919F; }
+.hero .lede { grid-column: 1; }
+.hero-side { grid-column: 2; }
+.lede { color: var(--slate); font-size: 1.08rem; max-width: 30rem; margin: 0; }
 
-/* Снимок обрезан полосой и упирается в край тёмного поля: окно выходит из него
-   в светлую часть страницы. Выноски лежат на пустом поле самого окна. */
-.shot {
-  grid-column: 2;
-  grid-row: 2;
-  align-self: end;
-  position: relative;
-  margin: 0;
-}
-.shot img { display: block; width: 100%; height: auto; }
-.shot figcaption { display: none; }
-
-.note {
-  position: absolute;
-  margin: 0;
-  max-width: 11rem;
-  font-size: .78rem;
-  line-height: 1.35;
-  color: #2E4450;
-}
-/* Волосяная линия от подписи к тому, о чём она: выноска, а не подпись рядом. */
-.note::before {
-  content: "";
-  position: absolute;
-  top: .55em;
-  right: 100%;
-  width: 2.2rem;
-  height: 1px;
-  margin-right: .5rem;
-  background: var(--cedar);
-}
-.note-window { top: 13%; left: 34%; }
-.note-apps { top: 58%; left: 34%; }
-
-/* ---------- Действия ---------- */
-
-.actions { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.6rem; }
+.actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 0; }
 .button {
   font: inherit;
-  font-variation-settings: 'wght' 560;
-  padding: .62rem 1.2rem;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  color: var(--text);
+  font-variation-settings: 'wdth' 100, 'wght' 600;
+  padding: .6rem 1.1rem;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  color: var(--ink);
   text-decoration: none;
 }
-.button:hover { border-color: var(--tide); }
-.button.primary { background: var(--cedar); border-color: var(--cedar); color: #170F05; }
-.button.primary:hover { background: color-mix(in srgb, var(--cedar) 88%, #000); }
-.button.ghost { border-color: #35566A; color: var(--fog); }
-.button.ghost:hover { border-color: var(--tide); }
-.button:focus-visible { outline: 2px solid var(--tide); outline-offset: 2px; }
+.button:hover { border-color: var(--ink); }
+.button.primary { background: var(--blue); border-color: var(--blue); color: #FFFFFF; }
+.button.primary:hover { background: color-mix(in srgb, var(--blue) 85%, #000); }
+.button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.fineprint { color: var(--slate); font-size: .86rem; margin-top: .9rem; }
 
-.fineprint { color: var(--muted); font-size: .88rem; margin-top: 1rem; }
+@media (prefers-color-scheme: dark) {
+  .button.primary { color: #0B1315; }
+}
 
-/* ---------- Как это работает: шаги и единственное движение ---------- */
+/* ---------- The spine: manifest keys, one row each ---------- */
 
-.how {
+.spine-title {
+  padding-bottom: 1.4rem;
+  font-size: clamp(1.1rem, 1.6vw, 1.25rem);
+  font-variation-settings: 'wdth' 100, 'wght' 600;
+  letter-spacing: 0;
+  color: var(--slate);
+}
+
+/* Линия между строками — сама конструкция страницы, а не украшение:
+   она отделяет один ключ манифеста от другого. */
+.row {
+  border-top: 1px solid var(--rule);
+  padding: clamp(2rem, 4vw, 3.2rem) 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
   gap: clamp(2rem, 5vw, 4rem);
-  align-items: center;
+  align-items: start;
 }
+.row-source p { color: var(--slate); font-size: .98rem; max-width: 30rem; }
+.row-result { min-width: 0; margin: 0; }
+.row-result img { display: block; width: 100%; height: auto; border-radius: 6px; }
+.row-result figcaption, .note { color: var(--slate); font-size: .88rem; margin-top: .9rem; max-width: 32rem; }
+.opens { color: var(--slate); font-size: .88rem; margin: 0 0 .6rem; }
+pre.url { margin-top: 0; }
 
-.steps { counter-reset: step; list-style: none; padding: 0; margin: 1.6rem 0 0; display: grid; gap: 1.1rem; }
-.steps li {
-  counter-increment: step;
-  display: grid;
-  grid-template-columns: 1.6rem 1fr;
-  gap: .9rem;
-  color: var(--muted);
-  max-width: 30rem;
-}
-.steps li::before {
-  content: counter(step);
-  font-variation-settings: 'wdth' 78, 'wght' 700;
-  color: var(--cedar);
-  line-height: 1.5;
-}
+/* ---------- Permissions table ---------- */
 
-/* Рамка меняет высоту, схлопывая браузерную обвязку, поэтому живёт в сцене
-   постоянной высоты — иначе цикл двигал бы всю страницу. */
-.stage { height: 12.5rem; display: grid; align-content: center; }
+.api { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.api th, .api td { text-align: left; vertical-align: baseline; padding: .8rem 1rem .8rem 0; }
+.api thead th { font-size: .8rem; font-variation-settings: 'wght' 600; color: var(--slate); padding-bottom: .4rem; }
+.api tbody tr { border-top: 1px solid var(--rule); }
+.api tbody th { width: 11rem; font-variation-settings: 'wght' 500; color: var(--slate); }
+.api tbody th code { color: var(--blue); font-size: .84rem; }
+.api td:last-child { color: var(--ink); }
+
+/* ---------- The one animation: browser chrome collapses into a window ---------- */
+
+/* Рамка меняет высоту, поэтому живёт в сцене постоянной высоты — иначе цикл
+   двигал бы всю страницу. */
+.stage { height: 13rem; display: grid; align-content: center; }
 
 .frame {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  background: var(--raise);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
   overflow: hidden;
 }
-
 .chrome-browser, .chrome-app {
-  border-bottom: 1px solid var(--line);
-  background: color-mix(in srgb, var(--tide) 10%, var(--surface));
+  border-bottom: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--ink) 4%, var(--raise));
   overflow: hidden;
 }
 .chrome-browser { padding: .5rem .6rem; animation: browser-out 7s ease-in-out infinite; }
@@ -222,22 +201,22 @@ section { padding-block: var(--gap); }
 .tabs { display: flex; gap: .3rem; }
 .tab {
   height: 1.3rem; width: 4.4rem; border-radius: 5px 5px 0 0;
-  background: color-mix(in srgb, var(--tide) 18%, transparent);
-  font-size: .68rem; color: var(--muted);
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  font-size: .68rem; color: var(--slate);
   display: flex; align-items: center; padding: 0 .45rem;
   overflow: hidden; white-space: nowrap;
 }
-.tab.active { background: var(--surface); width: 6.2rem; color: var(--text); }
+.tab.active { background: var(--raise); width: 7rem; color: var(--ink); }
 .urlbar {
   margin-top: .4rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--raise);
+  border: 1px solid var(--rule);
   border-radius: 999px;
   padding: .22rem .7rem;
   display: flex; align-items: center; gap: .4rem;
 }
 .urlbar .bar { width: 45%; height: .34rem; }
-.lock { width: 7px; height: 9px; border-radius: 2px; background: var(--tide); flex: none; }
+.lock { width: 7px; height: 9px; border-radius: 2px; background: var(--slate); flex: none; }
 
 .lights { display: inline-flex; gap: .45rem; }
 .lights i { width: 10px; height: 10px; border-radius: 50%; }
@@ -248,11 +227,11 @@ section { padding-block: var(--gap); }
 
 .page { display: grid; grid-template-columns: 7rem 1fr; gap: .8rem; padding: .9rem; }
 .page-side, .page-main { display: grid; gap: .4rem; align-content: start; }
-.bar { height: .42rem; border-radius: 3px; background: color-mix(in srgb, var(--tide) 22%, transparent); }
+.bar { height: .42rem; border-radius: 3px; background: color-mix(in srgb, var(--ink) 10%, transparent); }
 .w80 { width: 80%; } .w70 { width: 70%; } .w60 { width: 60%; } .w50 { width: 50%; } .w40 { width: 40%; }
 .art {
-  height: 4.4rem; border-radius: 6px; margin-bottom: .3rem;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--cedar) 55%, transparent), color-mix(in srgb, var(--tide) 45%, transparent));
+  height: 4.4rem; border-radius: 5px; margin-bottom: .3rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--blue) 35%, transparent), color-mix(in srgb, var(--ink) 8%, transparent));
 }
 
 /* Цикл замкнут: вкладка — окно — снова вкладка, с остановкой на каждом
@@ -275,84 +254,31 @@ section { padding-block: var(--gap); }
   .stage { height: auto; }
 }
 
-/* ---------- Код ---------- */
+/* ---------- Limits, closing, footer ---------- */
 
-.code-pair { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
-.code-pair figure { margin: 0; }
-.code-pair figcaption { color: var(--muted); font-size: .84rem; margin-bottom: .5rem; }
-.code-pair pre {
-  margin: 0;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 1rem 1.1rem;
-  overflow-x: auto;
-  font-size: .82rem;
-  line-height: 1.55;
-}
-.code-pair code { background: none; padding: 0; }
-.aside { color: var(--muted); font-size: .92rem; margin-top: 1.4rem; max-width: 44rem; }
+#limits, .closing { border-top: 1px solid var(--rule); padding: clamp(2.4rem, 5vw, 4rem) 0; }
+.limits { list-style: none; padding: 0; margin: 1.6rem 0 0; display: grid; gap: .8rem; max-width: 46rem; }
+.limits li { color: var(--slate); padding-left: 1.4rem; position: relative; }
+.limits li::before { content: ""; position: absolute; left: 0; top: .7em; width: .7rem; height: 1px; background: var(--blue); }
 
-/* ---------- Возможности: таблица, а не сетка карточек ----------
-   Разработчику важно, что именно требует разрешения, — это отношение,
-   и таблица показывает его прямо. */
-
-.api { width: 100%; border-collapse: collapse; font-size: .95rem; }
-.api th, .api td { text-align: left; vertical-align: baseline; padding: .85rem 1.2rem .85rem 0; }
-.api thead th {
-  font-size: .82rem;
-  font-variation-settings: 'wght' 600;
-  color: var(--muted);
-  padding-bottom: .5rem;
-}
-.api tbody tr { border-top: 1px solid var(--line); }
-.api tbody th { font-variation-settings: 'wght' 640; width: 12rem; }
-.api td:last-child { color: var(--muted); }
-.api .perm { width: 14rem; color: var(--muted); font-size: .88rem; }
-.api .perm code { color: var(--text); background: color-mix(in srgb, var(--cedar) 20%, transparent); }
-
-/* ---------- Границы ---------- */
-
-.limits { list-style: none; padding: 0; margin: 0; display: grid; gap: .9rem; max-width: 44rem; }
-.limits li { color: var(--muted); padding-left: 1.2rem; position: relative; }
-.limits li::before { content: "—"; position: absolute; left: 0; color: var(--tide); }
-
-/* ---------- Конец ---------- */
-
-.closing { border-top: 1px solid var(--line); }
-.closing p { color: var(--muted); }
+.closing p { color: var(--slate); margin-top: 1rem; }
+.closing .actions { margin-top: 1.6rem; }
 
 footer {
-  max-width: var(--page);
-  margin: 0 auto;
-  padding: 1.6rem clamp(1.1rem, 5vw, 3.5rem) 3rem;
+  padding: 1.6rem var(--side) 3rem;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  color: var(--muted);
-  font-size: .86rem;
+  color: var(--slate);
+  font-size: .85rem;
   flex-wrap: wrap;
 }
 
-@media (max-width: 62rem) {
-  /* Выноски держатся на месте только рядом с большим снимком; на узком экране
-     их роль возвращается обычной подписи. */
-  .note { display: none; }
-  .shot figcaption { display: block; color: #74919F; font-size: .84rem; margin-top: .8rem; }
-}
-
-@media (max-width: 54rem) {
-  .hero, .how { grid-template-columns: 1fr; }
-  .hero { padding-bottom: 2.5rem; }   /* в одну колонку снимок уже не выходит за край */
-  .hero h1, .hero-side, .shot { grid-column: 1; }
-  /* В разметке снимок идёт вторым — рядом с заголовком; в одну колонку он
-     должен встать после текста и кнопок, иначе разрывает их. */
-  .hero-side { grid-row: auto; order: 1; padding-bottom: 0; }
-  .shot { grid-row: auto; order: 2; margin-top: 2.5rem; }
-  .stage { margin-top: 2rem; }
-  .api thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-  .api, .api tbody, .api tr, .api th, .api td { display: block; width: auto; }
-  .api tbody tr { padding: 1rem 0; }
-  .api th, .api td { padding: 0; }
-  .api .perm { margin: .2rem 0 .4rem; }
+@media (max-width: 56rem) {
+  /* Именно minmax(0, 1fr), а не 1fr: у 1fr минимум — min-content, и длинная
+     строка кода растягивает колонку, а с ней и всю страницу. */
+  .hero, .row { grid-template-columns: minmax(0, 1fr); }
+  .hero-side { grid-column: 1; }
+  .api tbody th { width: auto; display: block; padding-bottom: .2rem; }
+  .api tbody td { display: block; }
 }
