@@ -157,8 +157,23 @@ main { padding: 0 var(--side); }
   .button.primary { color: #0B1315; }
 }
 
-/* ---------- The spine: manifest keys, one row each ---------- */
+/* ---------- Три довода: работы по упаковке нет вовсе ---------- */
 
+.nothing { padding: clamp(2.5rem, 5vw, 4rem) 0 0; }
+.nothing h2 { margin-bottom: 2rem; }
+.claims {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+/* Линия сверху отделяет довод от довода — структура, а не украшение. */
+.claims article { border-top: 1px solid var(--rule); padding-top: 1rem; }
+.claims h3 { margin-bottom: .3rem; }
+.claims p { color: var(--slate); font-size: .96rem; margin-top: 0; }
+
+/* ---------- Разделы страницы ---------- */
+
+.spine { padding-top: clamp(2.5rem, 5vw, 4rem); }
 .spine-title {
   padding-bottom: 1.4rem;
   font-size: clamp(1.1rem, 1.6vw, 1.25rem);
@@ -184,6 +199,14 @@ main { padding: 0 var(--side); }
 .note a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
 .opens { color: var(--slate); font-size: .88rem; margin: 0 0 .6rem; }
 pre.url { margin-top: 0; }
+
+/* ---------- Код: манифест и кнопка рядом ---------- */
+
+.code-pair { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); }
+.code-pair figure { margin: 0; min-width: 0; }
+.code-pair figcaption { color: var(--slate); font-size: .84rem; margin-bottom: .5rem; }
+.code-pair pre { margin: 0; }
+.aside { color: var(--slate); font-size: .92rem; margin-top: 1.4rem; max-width: 46rem; }
 
 /* ---------- Permissions table ---------- */
 

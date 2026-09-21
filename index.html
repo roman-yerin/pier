@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pier — turn your site into a desktop app</title>
-<meta name="description" content="Pier reads your web app manifest and builds a real desktop app: its own window, its own menus, a Dock icon, and the files, ports and devices a browser will not hand over.">
+<meta name="description" content="Pier turns a site with a web app manifest into a desktop app. Nothing to package, nothing to sign, nothing to submit: you deploy your site and the app follows.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0B1315">
 <link rel="icon" href="icon.png">
@@ -18,10 +18,10 @@
 <header class="masthead">
   <span class="wordmark">Pier</span>
   <nav>
-    <a href="#manifest">How it reads your manifest</a>
-    <a href="#permissions">Permissions</a>
+    <a href="#users">What your users get</a>
+    <a href="#code">What your code gets</a>
+    <a href="#ship">What you write</a>
     <a href="reference.html">Reference</a>
-    <a href="#limits">Limits</a>
     <a href="https://github.com/roman-yerin/pier">GitHub</a>
   </nav>
 </header>
@@ -37,41 +37,62 @@
     <span class="hero-tab">Your site</span>
   </div>
   <div class="hero-body">
-  <h1>Turn your site into a desktop app</h1>
+  <h1>Your site is the desktop app</h1>
   <p class="lede">
-    Pier reads the web app manifest you already ship and builds a real desktop
-    app around your site: its own window, its own menus, a Dock icon, and the
-    files, ports and devices a browser will not hand over.
+    There is no app to build. No bundle to package, nothing to sign or submit,
+    no second release train. You deploy your site the way you always do, and the
+    app is your site — in its own window, with the files, ports and devices a
+    browser will not hand over.
   </p>
   <div class="hero-side">
     <div class="actions">
       <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Download Pier</a>
-      <a class="button" href="#manifest">See what it reads</a>
+      <a class="button" href="#ship">See what you write</a>
     </div>
     <p class="fineprint" id="fineprint">0.5.0, macOS 14 and later, 3.2 MB, signed and notarized</p>
   </div>
   </div>
 </section>
 
-<!-- Спина страницы: манифест, прочитанный по ключам. Слева то, что пишет
-     разработчик, справа то, что из этого получает пользователь. -->
-<section id="manifest" class="spine">
-  <h2 class="spine-title">Your manifest, key by key</h2>
+<!-- Первое, что нужно знать человеку с сайтом: работы по упаковке нет вовсе.
+     Это и есть довод, а ключи манифеста — подробность, и лежат ниже. -->
+<section id="nothing" class="nothing">
+  <h2>Nothing to build, nothing to ship</h2>
+  <div class="claims">
+    <article>
+      <h3 class="plain">No bundle</h3>
+      <p>No Electron, no Chromium in your download, no build pipeline for a
+         second target. Pier is 3.2 MB and already on the person’s machine; the
+         app it makes is a shortcut to your site with native powers.</p>
+    </article>
+    <article>
+      <h3 class="plain">No certificate, no store</h3>
+      <p>No developer account, no notarization, no review, no yearly fee. The
+         app is built and signed on the person’s own machine, so it opens
+         without warnings.</p>
+    </article>
+    <article>
+      <h3 class="plain">No second release train</h3>
+      <p>Ship as usual. The app loads your site, so a deploy reaches everyone at
+         once — no version to bump, no update to push, nobody stuck on an old
+         build.</p>
+    </article>
+  </div>
+</section>
+
+<section id="users" class="spine">
+  <h2 class="spine-title">What your users get</h2>
 
   <article class="row">
     <div class="row-source">
-      <h3><code>display</code>, <code>scope</code></h3>
-      <p>Tabs, the address bar and someone else’s buttons go away. Your page runs
-         the same code it always did, now inside a window of its own. A link
-         outside the scope opens in the browser.</p>
-<pre><code>{
-  "display": "standalone",
-  "start_url": "/app",
-  "scope": "/app"
-}</code></pre>
+      <h3 class="plain">A window, not a tab</h3>
+      <p>Tabs, the address bar and someone else’s buttons go away. The page runs
+         the same code it always did, now with its own window, its own menus and
+         keyboard shortcuts, and a Dock icon that behaves like any other app.</p>
+      <p>A link outside your scope opens in the browser, so the app stays your
+         app.</p>
     </div>
-    <!-- Единственное движение на странице, и стоит оно ровно там, где объясняет
-         конкретный ключ: "display": "standalone" убирает браузерную обвязку. -->
+    <!-- Единственное движение на странице: браузерная обвязка уходит, остаётся окно. -->
     <div class="row-result stage" aria-hidden="true">
       <div class="frame">
         <div class="chrome-browser">
@@ -90,61 +111,90 @@
     </div>
   </article>
 
-  <article class="row" id="permissions">
-    <div class="row-source">
-      <h3><code>epwa.permissions</code></h3>
-      <p>Declare what your site needs. Pier shows the list in the install dialog
-         and bakes it into the app; anything you did not declare answers with an
-         error, even when your code asks for it.</p>
-<pre><code>{
-  "epwa": {
-    "permissions": ["files", "midi"]
-  }
-}</code></pre>
-    </div>
-    <div class="row-result">
-      <table class="api">
-        <thead>
-          <tr><th scope="col">Declare</th><th scope="col">And your page can</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">nothing</th>
-            <td>Drive the window and titlebar, fill the menu bar and the Dock menu, register global shortcuts, keep running in the background, store secrets in the Keychain, ask for Touch ID</td>
-          </tr>
-          <tr>
-            <th scope="row"><code>files</code></th>
-            <td>Open and save through system panels, then read, write, watch and trash what the person picked — across launches, without ever seeing a path</td>
-          </tr>
-          <tr>
-            <th scope="row"><code>network</code></th>
-            <td>Fetch without CORS, open TCP, TLS and UDP sockets, browse Bonjour, accept incoming connections (loopback unless the person allows more)</td>
-          </tr>
-          <tr>
-            <th scope="row"><code>serial</code> <code>usb</code> <code>hid</code> <code>bluetooth</code> <code>midi</code></th>
-            <td>Talk to the device the person picked in the system chooser. Keyboards, pointers and security keys are never handed over</td>
-          </tr>
-          <tr>
-            <th scope="row"><code>notifications</code></th>
-            <td>Post native notifications with buttons, a reply field and attachments, and hear about every click</td>
-          </tr>
-          <tr>
-            <th scope="row"><code>camera</code> <code>microphone</code> <code>location</code> <code>screen</code></th>
-            <td>Ask the operating system. It prompts, it decides, and Pier cannot work around the answer</td>
-          </tr>
-        </tbody>
-      </table>
-      <p class="note">144 methods and 50 events in total:
-        <a href="reference.html">the full reference</a> is generated from the same
-        spec the runtime is tested against, so it cannot drift from the code.</p>
-    </div>
-  </article>
-
   <article class="row">
     <div class="row-source">
-      <h3 class="plain">One button on your page</h3>
-      <p>The helper is a single file, no build step. It hides itself where Pier
-         cannot run, and hands the app whatever state the visitor had in the tab.</p>
+      <h3 class="plain">An app they can find and keep</h3>
+      <p>Installed apps live in <code>~/Applications/Pier</code>, so Spotlight and
+         Launchpad find them like anything else. Closing the window leaves the app
+         running: audio keeps playing, connections stay up, notifications still
+         arrive.</p>
+      <p>Sign-ins survive quitting, and the app opens on the page the person
+         was on when they left the tab.</p>
+    </div>
+    <figure class="row-result">
+      <img src="pier-home.png" alt="The Pier window listing two installed apps" width="1400" height="430">
+      <figcaption>Two sites, installed as apps. Removing one is dragging it to
+        the Trash.</figcaption>
+    </figure>
+  </article>
+</section>
+
+<section id="code" class="spine">
+  <h2 class="spine-title">What your code gets</h2>
+  <p class="section-lede">
+    <code>window.epwa</code> appears only inside the app, so the same code still
+    runs in any browser. Declare what you need in the manifest; anything you did
+    not declare answers with an error, even when your code asks for it.
+  </p>
+
+  <table class="api">
+    <thead>
+      <tr><th scope="col">Declare</th><th scope="col">And your page can</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">nothing</th>
+        <td>Drive the window and titlebar, fill the menu bar and the Dock menu, register global shortcuts, keep running in the background, store secrets in the Keychain, ask for Touch ID</td>
+      </tr>
+      <tr>
+        <th scope="row"><code>files</code></th>
+        <td>Open and save through system panels, then read, write, watch and trash what the person picked — across launches, without ever seeing a path</td>
+      </tr>
+      <tr>
+        <th scope="row"><code>network</code></th>
+        <td>Fetch without CORS, open TCP, TLS and UDP sockets, browse Bonjour, accept incoming connections (loopback unless the person allows more)</td>
+      </tr>
+      <tr>
+        <th scope="row"><code>serial</code> <code>usb</code> <code>hid</code> <code>bluetooth</code> <code>midi</code></th>
+        <td>Talk to the device the person picked in the system chooser. Keyboards, pointers and security keys are never handed over</td>
+      </tr>
+      <tr>
+        <th scope="row"><code>notifications</code></th>
+        <td>Post native notifications with buttons, a reply field and attachments, and hear about every click</td>
+      </tr>
+      <tr>
+        <th scope="row"><code>camera</code> <code>microphone</code> <code>location</code> <code>screen</code></th>
+        <td>Ask the operating system. It prompts, it decides, and Pier cannot work around the answer</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">144 methods and 50 events in total:
+    <a href="reference.html">the full reference</a> is generated from the same
+    spec the runtime is tested against, so it cannot drift from the code.</p>
+</section>
+
+<section id="ship" class="spine">
+  <h2 class="spine-title">What you write</h2>
+  <p class="section-lede">
+    Two things, once: a few keys in the manifest you probably already have, and a
+    button that opens an <code>epwa://</code> link. That is the whole integration.
+  </p>
+
+  <div class="code-pair">
+    <figure>
+      <figcaption>manifest.webmanifest</figcaption>
+<pre><code>{
+  "name": "Phonotheque",
+  "id": "/app",
+  "start_url": "/app",
+  "scope": "/app",
+  "display": "standalone",
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512" }],
+  "epwa": { "permissions": ["files", "midi"] }
+}</code></pre>
+    </figure>
+    <figure>
+      <figcaption>one button on your page</figcaption>
 <pre><code>import { canInstallApp, launchApp } from './pier-launch.js';
 
 button.hidden = !canInstallApp();
@@ -153,61 +203,37 @@ button.onclick = () =&gt; launchApp({
   handoff: { track: player.currentTrack },
   onLaunched: () =&gt; player.pause(),
 });</code></pre>
-    </div>
-    <div class="row-result">
-      <p class="opens">The click opens</p>
-<pre class="url"><code>epwa://launch?manifest=…&amp;handoff=…</code></pre>
-      <p class="note">Pier fetches the manifest over https, shows the person what
-        the site is and what it asks for, builds the app, and opens it on the
-        track they were playing. Already installed? It just opens.</p>
-      <p class="note">Lint a manifest before you publish it:
-        <code>web-runtime check &lt;url&gt;</code>.</p>
-    </div>
-  </article>
-
-  <article class="row">
-    <div class="row-source">
-      <h3><code>name</code>, <code>icons</code></h3>
-      <p>The app takes its name and icon from the manifest. A square PWA icon is
-         fitted to the system’s icon tile; one with its own shape is left alone.</p>
-<pre><code>{
-  "name": "Phonotheque",
-  "id": "/app",
-  "icons": [{ "src": "/icon-512.png", "sizes": "512x512" }]
-}</code></pre>
-    </div>
-    <figure class="row-result">
-      <img src="pier-home.png" alt="The Pier window listing two installed apps, Phonotheque and Mail" width="1400" height="430">
-      <figcaption>Installed apps land in <code>~/Applications/Pier</code>, so Spotlight
-        and Launchpad find them like any other app.</figcaption>
     </figure>
-  </article>
+  </div>
+
+  <p class="aside">The helper is one file, no build step; it hides the button
+    where Pier cannot run and hands the app whatever state the visitor had in the
+    tab. Lint a manifest before you publish it:
+    <code>web-runtime check &lt;url&gt;</code>.</p>
 </section>
 
 <section id="limits">
-  <h2>What the app cannot do</h2>
+  <h2>The honest part</h2>
   <ul class="limits">
+    <li>The person installs Pier once, by hand. Until they do, your button does
+        nothing — so show it only where it works.</li>
+    <li>macOS 14 and later today. Windows is next, Linux after it; both are a
+        plan, not a promise.</li>
     <li>The bridge answers the main frame of your own origin. An ad iframe, a
         login popup and any other site get an error.</li>
-    <li>Files, ports and devices arrive only through a system chooser. The page
-        never browses the disk.</li>
-    <li>Leaving your scope opens the browser and closes the devices and
-        connections the previous page held.</li>
-    <li>These limits are checked by tests on every build, not promised in prose.</li>
+    <li>Files, ports and devices arrive only through a system chooser, and these
+        limits are checked by tests on every build.</li>
   </ul>
 </section>
 
 <section class="closing">
   <h2>Install it and see</h2>
-  <p>You ship a manifest, not a binary: no developer account, no certificate, no
-     notarization, no yearly fee. The app is built and signed on the person’s own
-     machine, so it opens without warnings — and Pier needs no admin rights to do
-     any of it.</p>
-  <p>Removing an app is removing an app: drag it to the Trash, and Pier clears
-     what the site left behind on its next launch.</p>
+  <p>Pier needs no admin rights and keeps itself up to date. Try it on your own
+     site: add the manifest keys, drop in the button, and the next click opens
+     your site as an app.</p>
   <div class="actions">
     <a class="button primary" href="https://github.com/roman-yerin/pier/releases/latest/download/Pier.dmg" data-download>Download Pier</a>
-    <a class="button" href="https://github.com/roman-yerin/pier/releases">All releases</a>
+    <a class="button" href="reference.html">Read the reference</a>
   </div>
 </section>
 
