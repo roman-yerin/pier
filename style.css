@@ -140,9 +140,6 @@ section { padding-block: clamp(2.5rem, 5vw, 4rem); }
 .hero-body h1 { grid-column: 1 / -1; }
 .hero-body .lede { grid-column: 1; }
 .hero-side { grid-column: 2; align-self: end; }
-/* Иконка держит верх правой колонки и говорит, что именно скачивают;
-   alt пуст — рядом стоит кнопка с тем же смыслом. */
-.hero-icon { display: block; width: 88px; height: 88px; margin: 0 0 1.1rem; }
 .lede { color: var(--slate); font-size: 1.08rem; max-width: 30rem; margin: 0; }
 
 .actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 0; }
