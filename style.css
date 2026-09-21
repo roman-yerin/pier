@@ -129,17 +129,26 @@ section { padding-block: clamp(2.5rem, 5vw, 4rem); }
   background: color-mix(in srgb, var(--ink) 4%, var(--raise));
 }
 .hero-tab { font-size: .82rem; font-variation-settings: 'wght' 600; }
+/* Две колонки: слева весь текст, справа иконка с кнопками. Заголовок
+   занимает свою колонку, а не всю ширину, — иначе правая колонка остаётся
+   с одними кнопками и зияет. */
 .hero-body {
   padding: clamp(2rem, 5vw, 3.5rem);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
   column-gap: clamp(1.5rem, 4vw, 3rem);
   row-gap: clamp(1.8rem, 4vw, 3rem);
-  align-items: end;
+  align-items: center;
 }
-.hero-body h1 { grid-column: 1 / -1; }
-.hero-body .lede { grid-column: 1; }
-.hero-side { grid-column: 2; align-self: end; }
+.hero-body h1 {
+  /* В половину ширины прежний кегль рассыпался бы на пять строк. */
+  font-size: clamp(2.4rem, 5.2vw, 4.2rem);
+}
+.hero-body .lede { margin-top: 1.2rem; }
+.hero-side { justify-self: start; }
+/* Иконка стоит над кнопками и говорит, что именно скачивают; alt пуст —
+   рядом кнопка с тем же смыслом. */
+.hero-icon { display: block; width: clamp(96px, 11vw, 144px); height: auto; margin: 0 0 1.4rem; }
 .lede { color: var(--slate); font-size: 1.08rem; max-width: 30rem; margin: 0; }
 
 .actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 0; }
