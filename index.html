@@ -27,7 +27,15 @@
 
 <main>
 
+<!-- Продукт показан на самой странице: герой сидит в окне приложения,
+     с настоящим титлбаром и кнопками окна. Это графика, которая что-то
+     утверждает, а не украшает. -->
 <section class="hero">
+  <div class="hero-titlebar" aria-hidden="true">
+    <span class="lights"><i></i><i></i><i></i></span>
+    <span class="hero-tab">Your site</span>
+  </div>
+  <div class="hero-body">
   <h1>Turn your site into a desktop app</h1>
   <p class="lede">
     Pier reads the web app manifest you already ship and builds a real desktop
@@ -40,6 +48,7 @@
       <a class="button" href="#manifest">See what it reads</a>
     </div>
     <p class="fineprint" id="fineprint">0.5.0, macOS 14 and later, 3.2 MB, signed and notarized</p>
+  </div>
   </div>
 </section>
 

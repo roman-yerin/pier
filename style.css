@@ -106,16 +106,35 @@ main { padding: 0 var(--side); }
 
 /* ---------- Hero ---------- */
 
+/* Герой — это окно: рамка, титлбар с кнопками, внутри содержимое страницы. */
 .hero {
-  padding: clamp(1rem, 3vw, 2.5rem) 0 clamp(3rem, 6vw, 5rem);
+  margin: clamp(.5rem, 2vw, 1.5rem) 0 clamp(3rem, 6vw, 5rem);
+  background: var(--raise);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(16, 28, 30, .05), 0 18px 40px rgba(16, 28, 30, .07);
+}
+.hero-titlebar {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  padding: .7rem 1rem;
+  border-bottom: 1px solid var(--rule);
+  background: color-mix(in srgb, var(--ink) 4%, var(--raise));
+}
+.hero-tab { font-size: .82rem; font-variation-settings: 'wght' 600; }
+.hero-body {
+  padding: clamp(2rem, 5vw, 3.5rem);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 3rem);
+  column-gap: clamp(1.5rem, 4vw, 3rem);
+  row-gap: clamp(1.8rem, 4vw, 3rem);
   align-items: end;
 }
-.hero h1 { grid-column: 1 / -1; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
-.hero .lede { grid-column: 1; }
-.hero-side { grid-column: 2; }
+.hero-body h1 { grid-column: 1 / -1; }
+.hero-body .lede { grid-column: 1; }
+.hero-side { grid-column: 2; align-self: end; }
 .lede { color: var(--slate); font-size: 1.08rem; max-width: 30rem; margin: 0; }
 
 .actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 0; }
@@ -278,7 +297,7 @@ footer {
 @media (max-width: 56rem) {
   /* Именно minmax(0, 1fr), а не 1fr: у 1fr минимум — min-content, и длинная
      строка кода растягивает колонку, а с ней и всю страницу. */
-  .hero, .row { grid-template-columns: minmax(0, 1fr); }
+  .hero-body, .row { grid-template-columns: minmax(0, 1fr); }
   .hero-side { grid-column: 1; }
   .api tbody th { width: auto; display: block; padding-bottom: .2rem; }
   .api tbody td { display: block; }
