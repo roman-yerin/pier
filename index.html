@@ -60,24 +60,6 @@
 
   <article class="row">
     <div class="row-source">
-      <h3><code>name</code>, <code>icons</code></h3>
-      <p>The app takes its name and icon from the manifest. A square PWA icon is
-         fitted to the system’s icon tile; one with its own shape is left alone.</p>
-<pre><code>{
-  "name": "Phonotheque",
-  "id": "/app",
-  "icons": [{ "src": "/icon-512.png", "sizes": "512x512" }]
-}</code></pre>
-    </div>
-    <figure class="row-result">
-      <img src="pier-home.png" alt="The Pier window listing two installed apps, Phonotheque and Mail" width="1400" height="430">
-      <figcaption>Installed apps land in <code>~/Applications/Pier</code>, so Spotlight
-        and Launchpad find them like any other app.</figcaption>
-    </figure>
-  </article>
-
-  <article class="row">
-    <div class="row-source">
       <h3><code>display</code>, <code>scope</code></h3>
       <p>Tabs, the address bar and someone else’s buttons go away. Your page runs
          the same code it always did, now inside a window of its own. A link
@@ -181,6 +163,24 @@ button.onclick = () =&gt; launchApp({
       <p class="note">Lint a manifest before you publish it:
         <code>web-runtime check &lt;url&gt;</code>.</p>
     </div>
+  </article>
+
+  <article class="row">
+    <div class="row-source">
+      <h3><code>name</code>, <code>icons</code></h3>
+      <p>The app takes its name and icon from the manifest. A square PWA icon is
+         fitted to the system’s icon tile; one with its own shape is left alone.</p>
+<pre><code>{
+  "name": "Phonotheque",
+  "id": "/app",
+  "icons": [{ "src": "/icon-512.png", "sizes": "512x512" }]
+}</code></pre>
+    </div>
+    <figure class="row-result">
+      <img src="pier-home.png" alt="The Pier window listing two installed apps, Phonotheque and Mail" width="1400" height="430">
+      <figcaption>Installed apps land in <code>~/Applications/Pier</code>, so Spotlight
+        and Launchpad find them like any other app.</figcaption>
+    </figure>
   </article>
 </section>
 
