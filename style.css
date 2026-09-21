@@ -1,6 +1,14 @@
 /* Pier — сайт продукта.
-   Палитра из предмета: пирс это дерево над водой. Глубокая вода, туман,
-   отлив и кедровая доска. Акцент один и работает только на действиях. */
+
+   Замысел: страница разбирает настоящее окно, а не рассказывает о нём.
+   Отсюда две вещи. Первая — заголовок набран узким начертанием Archivo
+   (ось wdth, 70 из 62–125): характер держит ось шрифта, а не кегль и жир.
+   Вторая — снимок окна с выносками: пустое поле окна и есть место для
+   подписей, так снимок становится схемой.
+
+   Палитра из предмета: пирс это дерево над водой — глубокая вода, туман,
+   отлив и кедровая доска. Кедровый работает только на действиях, выносках
+   и номерах шагов; больше нигде. */
 
 :root {
   --ink: #0B1B24;
@@ -44,16 +52,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Иерархию держат ширина и насыщенность одного шрифта, как надпись на указателе. */
-h1, h2 {
-  font-variation-settings: 'wdth' 116, 'wght' 680;
-  letter-spacing: -.022em;
-  line-height: 1.04;
-  margin: 0;
-  text-wrap: balance;
+h1, h2 { margin: 0; line-height: 1; text-wrap: balance; }
+
+/* Узкое начертание — главный приём страницы, поэтому оно только у заголовков. */
+h1 {
+  font-variation-settings: 'wdth' 70, 'wght' 700;
+  font-size: clamp(3.4rem, 11vw, 8.5rem);
+  line-height: .92;
+  letter-spacing: -.012em;
 }
-h1 { font-size: clamp(2.3rem, 5vw, 3.7rem); }
-h2 { font-size: clamp(1.7rem, 3.2vw, 2.4rem); }
+h2 {
+  font-variation-settings: 'wdth' 78, 'wght' 650;
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  letter-spacing: -.008em;
+}
 
 p { margin: .8em 0 0; max-width: 34rem; }
 a { color: inherit; }
@@ -91,24 +103,55 @@ section { padding-block: var(--gap); }
   background: var(--ink);
   color: var(--fog);
   margin-inline: calc(50% - 50vw);
-  padding: clamp(2.5rem, 5vw, 4.5rem) var(--side) 0;
+  padding: clamp(2rem, 4vw, 3.5rem) var(--side) 0;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  column-gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
 }
-.hero .lede { color: #A6BEC9; font-size: 1.14rem; max-width: 26rem; }
-.hero .fineprint { color: #74919F; padding-bottom: clamp(2rem, 4vw, 3.5rem); }
+/* Заголовок во всю ширину — единственный громкий элемент страницы. */
+.hero h1 { grid-column: 1 / -1; margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+.hero-side { grid-column: 1; padding-bottom: clamp(2rem, 4vw, 3.5rem); }
+.hero .lede { color: #A6BEC9; font-size: 1.1rem; max-width: 24rem; margin-top: 0; }
+.hero .fineprint { color: #74919F; }
 
 /* Снимок обрезан полосой и упирается в край тёмного поля: окно выходит из него
-   в светлую часть страницы, а не висит картинкой на фоне. */
-.shot { margin: 0; align-self: end; display: grid; gap: .9rem; }
+   в светлую часть страницы. Выноски лежат на пустом поле самого окна. */
+.shot {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  position: relative;
+  margin: 0;
+}
 .shot img { display: block; width: 100%; height: auto; }
-.shot figcaption { color: #74919F; font-size: .86rem; max-width: 26rem; }
+.shot figcaption { display: none; }
+
+.note {
+  position: absolute;
+  margin: 0;
+  max-width: 11rem;
+  font-size: .78rem;
+  line-height: 1.35;
+  color: #2E4450;
+}
+/* Волосяная линия от подписи к тому, о чём она: выноска, а не подпись рядом. */
+.note::before {
+  content: "";
+  position: absolute;
+  top: .55em;
+  right: 100%;
+  width: 2.2rem;
+  height: 1px;
+  margin-right: .5rem;
+  background: var(--cedar);
+}
+.note-window { top: 13%; left: 34%; }
+.note-apps { top: 58%; left: 34%; }
 
 /* ---------- Действия ---------- */
 
-.actions { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.8rem; }
+.actions { display: flex; gap: .7rem; flex-wrap: wrap; margin-top: 1.6rem; }
 .button {
   font: inherit;
   font-variation-settings: 'wght' 560;
@@ -147,7 +190,7 @@ section { padding-block: var(--gap); }
 }
 .steps li::before {
   content: counter(step);
-  font-variation-settings: 'wdth' 116, 'wght' 700;
+  font-variation-settings: 'wdth' 78, 'wght' 700;
   color: var(--cedar);
   line-height: 1.5;
 }
@@ -250,19 +293,23 @@ section { padding-block: var(--gap); }
 .code-pair code { background: none; padding: 0; }
 .aside { color: var(--muted); font-size: .92rem; margin-top: 1.4rem; max-width: 44rem; }
 
-/* ---------- Инвентарь возможностей ---------- */
+/* ---------- Возможности: таблица, а не сетка карточек ----------
+   Разработчику важно, что именно требует разрешения, — это отношение,
+   и таблица показывает его прямо. */
 
-.api {
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
-  column-gap: clamp(2rem, 5vw, 4rem);
+.api { width: 100%; border-collapse: collapse; font-size: .95rem; }
+.api th, .api td { text-align: left; vertical-align: baseline; padding: .85rem 1.2rem .85rem 0; }
+.api thead th {
+  font-size: .82rem;
+  font-variation-settings: 'wght' 600;
+  color: var(--muted);
+  padding-bottom: .5rem;
 }
-/* Линия сверху отделяет группы друг от друга, а не украшает: карточек здесь нет. */
-.api > div { border-top: 1px solid var(--line); padding: 1rem 0 1.1rem; }
-.api dt { font-variation-settings: 'wght' 640; margin-bottom: .25rem; }
-.api dd { margin: 0; color: var(--muted); font-size: .96rem; max-width: 30rem; }
-.api code { font-size: .8em; }
+.api tbody tr { border-top: 1px solid var(--line); }
+.api tbody th { font-variation-settings: 'wght' 640; width: 12rem; }
+.api td:last-child { color: var(--muted); }
+.api .perm { width: 14rem; color: var(--muted); font-size: .88rem; }
+.api .perm code { color: var(--text); background: color-mix(in srgb, var(--cedar) 20%, transparent); }
 
 /* ---------- Границы ---------- */
 
@@ -287,8 +334,25 @@ footer {
   flex-wrap: wrap;
 }
 
+@media (max-width: 62rem) {
+  /* Выноски держатся на месте только рядом с большим снимком; на узком экране
+     их роль возвращается обычной подписи. */
+  .note { display: none; }
+  .shot figcaption { display: block; color: #74919F; font-size: .84rem; margin-top: .8rem; }
+}
+
 @media (max-width: 54rem) {
   .hero, .how { grid-template-columns: 1fr; }
-  .hero { align-items: start; }
+  .hero { padding-bottom: 2.5rem; }   /* в одну колонку снимок уже не выходит за край */
+  .hero h1, .hero-side, .shot { grid-column: 1; }
+  /* В разметке снимок идёт вторым — рядом с заголовком; в одну колонку он
+     должен встать после текста и кнопок, иначе разрывает их. */
+  .hero-side { grid-row: auto; order: 1; padding-bottom: 0; }
+  .shot { grid-row: auto; order: 2; margin-top: 2.5rem; }
   .stage { margin-top: 2rem; }
+  .api thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .api, .api tbody, .api tr, .api th, .api td { display: block; width: auto; }
+  .api tbody tr { padding: 1rem 0; }
+  .api th, .api td { padding: 0; }
+  .api .perm { margin: .2rem 0 .4rem; }
 }
